@@ -105,6 +105,7 @@ body::before {
     text-align: center;
     padding: var(--spacing-2xl) 0 var(--spacing-xl);
     margin-bottom: var(--spacing-lg);
+    position: relative;
 }
 
 .logo {
@@ -153,6 +154,51 @@ body::before {
     font-size: 1rem;
     margin-top: var(--spacing-sm);
     font-weight: 500;
+}
+
+/* Language Selector */
+.language-selector {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    display: flex;
+    gap: var(--spacing-xs);
+    z-index: 100;
+}
+
+.lang-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    font-family: var(--font-primary);
+}
+
+.lang-btn:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+.lang-btn.active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #000;
+    box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+@media (max-width: 768px) {
+    .language-selector {
+        position: static;
+        justify-content: center;
+        margin-top: var(--spacing-md);
+    }
 }
 
 /* Tabs Navigation */

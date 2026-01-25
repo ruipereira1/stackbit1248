@@ -46,26 +46,30 @@
                 </div>
                 <h1>Stackbit 1248</h1>
             </div>
-            <p class="subtitle">Ferramenta BIP39 para Backup em Metal</p>
+            <p class="subtitle" data-i18n="subtitle">Ferramenta BIP39 para Backup em Metal</p>
+            <div class="language-selector">
+                <button class="lang-btn" data-lang="pt-BR" title="Português">🇧🇷 PT</button>
+                <button class="lang-btn" data-lang="en" title="English">🇺🇸 EN</button>
+            </div>
         </header>
 
         <!-- Navigation Tabs -->
         <nav class="tabs">
             <button class="tab active" data-tab="encode">
                 <span class="tab-icon">→</span>
-                Encode
+                <span data-i18n="encode">Encode</span>
             </button>
             <button class="tab" data-tab="decode">
                 <span class="tab-icon">←</span>
-                Decode
+                <span data-i18n="decode">Decode</span>
             </button>
             <button class="tab" data-tab="recovery">
                 <span class="tab-icon">🔧</span>
-                Recovery
+                <span data-i18n="recovery">Recovery</span>
             </button>
             <button class="tab" data-tab="tutorial">
                 <span class="tab-icon">📖</span>
-                Tutorial
+                <span data-i18n="tutorial">Tutorial</span>
             </button>
         </nav>
 
@@ -74,13 +78,13 @@
             <!-- ENCODE Section -->
             <section id="encode" class="section active">
                 <div class="section-header">
-                    <h2>Encode: Palavra → Código 1248</h2>
-                    <p>Digite uma palavra BIP39 para ver seu código</p>
+                    <h2 data-i18n="encodeTitle">Encode: Palavra → Código 1248</h2>
+                    <p data-i18n="encodeDescription">Digite uma palavra BIP39 para ver seu código</p>
                 </div>
 
                 <div class="input-group">
-                    <label for="encode-input">Palavra BIP39</label>
-                    <input type="text" id="encode-input" placeholder="Ex: abandon, zoo, lounge..." autocomplete="off"
+                    <label for="encode-input" data-i18n="encodeLabel">Palavra BIP39</label>
+                    <input type="text" id="encode-input" data-i18n="encodePlaceholder" placeholder="Ex: abandon, zoo, lounge..." autocomplete="off"
                         spellcheck="false">
                     <div id="encode-suggestions" class="suggestions"></div>
                 </div>
@@ -88,26 +92,26 @@
                 <div id="encode-result" class="result-card hidden">
                     <div class="result-header">
                         <span class="word-display" id="encode-word"></span>
-                        <span class="index-display">Índice: <span id="encode-index"></span></span>
+                        <span class="index-display"><span data-i18n="encodeIndex">Índice:</span> <span id="encode-index"></span></span>
                     </div>
                     <div class="code-display">
-                        <span class="code-label">Código 1248:</span>
+                        <span class="code-label" data-i18n="encodeCode">Código 1248:</span>
                         <span class="code-value" id="encode-code"></span>
                     </div>
                     <div class="quadros-container" id="encode-quadros"></div>
-                    <p class="quadros-hint">Marque os pontos indicados (●) com o punção</p>
+                    <p class="quadros-hint" data-i18n="encodeHint">Marque os pontos indicados (●) com o punção</p>
                 </div>
             </section>
 
             <!-- DECODE Section -->
             <section id="decode" class="section">
                 <div class="section-header">
-                    <h2>Decode: Código 1248 → Palavra</h2>
-                    <p>Digite o código de 4 dígitos para revelar a palavra</p>
+                    <h2 data-i18n="decodeTitle">Decode: Código 1248 → Palavra</h2>
+                    <p data-i18n="decodeDescription">Digite o código de 4 dígitos para revelar a palavra</p>
                 </div>
 
                 <div class="code-input-group">
-                    <label>Código 1248 (0001-2048)</label>
+                    <label data-i18n="decodeLabel">Código 1248 (0001-2048)</label>
                     <div class="digit-inputs">
                         <input type="text" class="digit-input" id="decode-d1" maxlength="1" pattern="[0-2]"
                             placeholder="0">
@@ -123,22 +127,22 @@
                 <div id="decode-result" class="result-card hidden">
                     <div class="result-header">
                         <span class="word-display" id="decode-word"></span>
-                        <span class="index-display">Índice: <span id="decode-index"></span></span>
+                        <span class="index-display"><span data-i18n="encodeIndex">Índice:</span> <span id="decode-index"></span></span>
                     </div>
                     <div class="quadros-container" id="decode-quadros"></div>
                 </div>
 
                 <div id="decode-error" class="error-card hidden">
                     <span class="error-icon">⚠</span>
-                    <span class="error-message">Código inválido. Use valores entre 0001 e 2048.</span>
+                    <span class="error-message" data-i18n="decodeError">Código inválido. Use valores entre 0001 e 2048.</span>
                 </div>
             </section>
 
             <!-- RECOVERY Section -->
             <section id="recovery" class="section">
                 <div class="section-header">
-                    <h2>Recuperação de Seed Física</h2>
-                    <p>Como revelar as marcações da sua Stackbit física</p>
+                    <h2 data-i18n="recoveryTitle">Recuperação de Seed Física</h2>
+                    <p data-i18n="recoveryDescription">Como revelar as marcações da sua Stackbit física</p>
                 </div>
 
                 <div class="recovery-content">
@@ -207,9 +211,9 @@
             <!-- TUTORIAL Section -->
             <section id="tutorial" class="section">
                 <div class="section-header">
-                    <h2>Tutorial: Como Gravar sua Stackbit 1248</h2>
-                    <p>Passo a passo completo baseado no <a href="https://stackbit.me/tutorial-stackbit-1248/" target="_blank" rel="noopener noreferrer">tutorial oficial</a></p>
-                    <p class="offline-note">ℹ️ <strong>Nota:</strong> Links externos não funcionam offline. Use a função Encode/Decode desta ferramenta que funciona 100% offline.</p>
+                    <h2 data-i18n="tutorialTitle">Tutorial: Como Gravar sua Stackbit 1248</h2>
+                    <p><span data-i18n="tutorialDescription">Passo a passo completo baseado no</span> <a href="https://stackbit.me/tutorial-stackbit-1248/" target="_blank" rel="noopener noreferrer" data-i18n="tutorialOfficial">tutorial oficial</a></p>
+                    <p class="offline-note">ℹ️ <strong data-i18n="tutorialOfflineNote">Nota:</strong> <span data-i18n="tutorialOfflineText">Links externos não funcionam offline. Use a função Encode/Decode desta ferramenta que funciona 100% offline.</span></p>
                 </div>
 
                 <div class="tutorial-content">
@@ -312,13 +316,14 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>⚠️ Use apenas offline. Nunca compartilhe sua seed.</p>
-            <p class="copyright">Stackbit 1248 Tool - BIP39 Compatible</p>
-            <p class="credits">Inspirado no sistema <a href="https://stackbit.me/" target="_blank" rel="noopener noreferrer">Stackbit Metalwallet</a> | Todas as informações sobre o sistema 1248 foram baseadas no conteúdo disponível em <a href="https://stackbit.me/" target="_blank" rel="noopener noreferrer">stackbit.me</a></p>
+            <p data-i18n="footerWarning">⚠️ Use apenas offline. Nunca compartilhe sua seed.</p>
+            <p class="copyright" data-i18n="footerCopyright">Stackbit 1248 Tool - BIP39 Compatible</p>
+            <p class="credits" data-i18n="footerCredits">Inspirado no sistema <a href="https://stackbit.me/" target="_blank" rel="noopener noreferrer" data-i18n="footerCreditsLink">Stackbit Metalwallet</a> | <span data-i18n="footerCreditsText">Todas as informações sobre o sistema 1248 foram baseadas no conteúdo disponível em</span> <a href="https://stackbit.me/" target="_blank" rel="noopener noreferrer" data-i18n="footerCreditsLink2">stackbit.me</a></p>
         </footer>
     </div>
 
     <script src="bip39-words.js"></script>
+    <script src="i18n.js"></script>
     <script>
         // Carregar manifest.json apenas se não estiver em file://
         if (location.protocol !== 'file:') {
@@ -463,6 +468,28 @@
             */
             
         })();
+    </script>
+    <script>
+        // Inicializar seletor de idioma
+        document.addEventListener('DOMContentLoaded', () => {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const currentLang = getCurrentLanguage();
+            
+            // Destacar idioma atual
+            langButtons.forEach(btn => {
+                if (btn.getAttribute('data-lang') === currentLang) {
+                    btn.classList.add('active');
+                }
+                
+                btn.addEventListener('click', () => {
+                    const lang = btn.getAttribute('data-lang');
+                    setLanguage(lang);
+                    // Atualizar botões ativos
+                    langButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+        });
     </script>
     <script src="app.js"></script>
 </body>
