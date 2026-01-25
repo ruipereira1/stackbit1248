@@ -690,6 +690,172 @@ body::before {
     font-size: 1.5rem;
 }
 
+/* Recovery Section */
+.recovery-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.recovery-pdf-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.recovery-pdf-section h3 {
+    color: var(--accent-primary);
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+}
+
+.recovery-pdf-section p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+}
+
+.pdf-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--accent-primary);
+    color: #000;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: all var(--transition-normal);
+    border: 2px solid transparent;
+}
+
+.btn-pdf:hover {
+    background: var(--accent-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.btn-pdf-view {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-pdf-view:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent-primary);
+    box-shadow: 0 4px 12px rgba(247, 147, 26, 0.2);
+}
+
+.pdf-icon {
+    font-size: 1.2rem;
+}
+
+.recovery-method {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    backdrop-filter: blur(10px);
+}
+
+.recovery-method h3 {
+    color: var(--accent-primary);
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+}
+
+.recovery-steps {
+    color: var(--text-primary);
+    line-height: 1.8;
+    padding-left: var(--spacing-lg);
+    margin: var(--spacing-md) 0;
+}
+
+.recovery-steps li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.recovery-note {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--accent-primary);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.recovery-warning {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid var(--warning);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.warning-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.recovery-warning strong {
+    color: var(--warning);
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.1rem;
+}
+
+.recovery-warning ul {
+    color: var(--text-primary);
+    line-height: 1.8;
+    padding-left: var(--spacing-lg);
+    margin-top: var(--spacing-sm);
+}
+
+.recovery-warning li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.recovery-tips {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    backdrop-filter: blur(10px);
+}
+
+.recovery-tips h3 {
+    color: var(--accent-primary);
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+}
+
+.recovery-tips ul {
+    color: var(--text-primary);
+    line-height: 1.8;
+    padding-left: var(--spacing-lg);
+}
+
+.recovery-tips li {
+    margin-bottom: var(--spacing-sm);
+}
 
 /* Buttons */
 .btn {
@@ -761,6 +927,24 @@ body::before {
 .footer p:first-child {
     color: var(--warning);
     margin-bottom: var(--spacing-xs);
+}
+
+.footer .credits {
+    margin-top: var(--spacing-md);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    opacity: 0.8;
+}
+
+.footer .credits a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.footer .credits a:hover {
+    color: var(--accent-secondary);
+    text-decoration: underline;
 }
 
 /* Scrollbar */

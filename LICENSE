@@ -26,3 +26,12 @@ NOTA SOBRE BIP39:
 Este projeto utiliza o dicionário BIP39 (Bitcoin Improvement Proposal 39),
 que é um padrão público e aberto. As palavras do dicionário BIP39 são
 de domínio público e não estão sujeitas a direitos autorais.
+
+---
+
+CRÉDITOS E INSPIRAÇÃO:
+Esta aplicação foi inspirada no sistema Stackbit 1248 desenvolvido pela
+Stackbit Metalwallet (https://stackbit.me/). Todas as informações sobre o
+sistema de codificação 1248 foram baseadas no conteúdo disponível no site
+Stackbit. Agradecimentos especiais à equipe da Stackbit Metalwallet pela
+criação e documentação do sistema Stackbit 1248.

@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Show target section - validação de segurança
                 const targetId = tab.getAttribute('data-tab');
-                if (!targetId || (targetId !== 'encode' && targetId !== 'decode')) {
+                if (!targetId || (targetId !== 'encode' && targetId !== 'decode' && targetId !== 'recovery')) {
                     // Log seguro - não expor valor do targetId (pode ser malicioso)
                     secureConsole.error('Erro: Tab inválido');
                     return;

@@ -8,7 +8,7 @@ Obrigado por considerar contribuir para o Stackbit 1248! Este documento fornece 
 
 Se encontrar um bug, por favor:
 
-1. Verifique se o bug já não foi reportado nas [Issues](https://github.com/seu-usuario/seedsigner/issues)
+1. Verifique se o bug já não foi reportado nas [Issues](https://github.com/ruipereira1/stackbit1248/issues)
 2. Crie uma nova issue com:
    - Descrição clara do problema
    - Passos para reproduzir
@@ -20,7 +20,7 @@ Se encontrar um bug, por favor:
 
 Sugestões são bem-vindas! Por favor:
 
-1. Verifique se a sugestão já não existe nas [Issues](https://github.com/seu-usuario/seedsigner/issues)
+1. Verifique se a sugestão já não existe nas [Issues](https://github.com/ruipereira1/stackbit1248/issues)
 2. Crie uma issue com:
    - Descrição clara da funcionalidade
    - Motivação/justificativa
@@ -32,8 +32,8 @@ Sugestões são bem-vindas! Por favor:
 
 1. **Fork o repositório**
    ```bash
-   git clone https://github.com/seu-usuario/seedsigner.git
-   cd seedsigner
+   git clone https://github.com/ruipereira1/stackbit1248.git
+   cd stackbit1248
    ```
 
 2. **Crie uma branch para sua feature**

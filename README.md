@@ -22,12 +22,10 @@ Aplicação web open source para codificação e decodificação de palavras BIP
 
 ## 🌐 Publicar em um Site
 
-Veja o arquivo `COMO_PUBLICAR_SITE.md` para instruções detalhadas.
-
 **Opções rápidas:**
-- GitHub Pages (grátis)
-- Netlify (grátis)
-- Vercel (grátis)
+- GitHub Pages (grátis) - Ative em Settings → Pages
+- Netlify (grátis) - Conecte o repositório GitHub
+- Vercel (grátis) - Importe o repositório GitHub
 
 ## 🔒 Segurança
 
@@ -54,12 +52,23 @@ Contribuições são bem-vindas! Por favor, leia o [Guia de Contribuição](CONT
 
 ## 📚 Documentação
 
-- [Como Publicar no GitHub](PUBLICAR_GITHUB.md) 🚀
-- [Como Publicar no Site](COMO_PUBLICAR_SITE.md)
-- [Como Tornar Open Source](COMO_TORNAR_OPENSOURCE.md)
-- [Verificação do Dicionário BIP39](VERIFICACAO_FINAL.md)
+- [Créditos e Agradecimentos](CREDITOS.md)
+- [Guia de Contribuição](CONTRIBUTING.md)
+
+## 🙏 Créditos e Inspiração
+
+Esta aplicação foi **inspirada no sistema Stackbit 1248** desenvolvido pela [Stackbit Metalwallet](https://stackbit.me/).
+
+- **Site Original:** [https://stackbit.me/](https://stackbit.me/)
+- **Sistema 1248:** Todas as informações sobre o sistema de codificação 1248 foram baseadas no conteúdo disponível no site Stackbit
+- **Créditos:** Agradecimentos especiais à equipe da Stackbit Metalwallet pela criação e documentação do sistema Stackbit 1248
+
+Este projeto é uma implementação web open source do sistema Stackbit 1248 para codificação e decodificação de palavras BIP39.
+
+📖 **Para mais informações sobre os créditos, veja:** [CREDITOS.md](CREDITOS.md)
 
 ## 🔗 Recursos
 
+- [Stackbit Metalwallet](https://stackbit.me/) - Site original e inspiração
 - [BIP39 Specification](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
 - [Bitcoin BIPs Repository](https://github.com/bitcoin/bips)
