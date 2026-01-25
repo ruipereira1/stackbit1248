@@ -10,7 +10,8 @@ const FILES_TO_CACHE = [
   './app.js',
   './styles.css',
   './bip39-words.js',
-  './manifest.json'
+  './manifest.json',
+  './SEED-RECOVERY.pdf'
 ];
 
 // Instalar Service Worker
