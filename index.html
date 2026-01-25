@@ -55,6 +55,10 @@
                 <span class="tab-icon">🔧</span>
                 Recovery
             </button>
+            <button class="tab" data-tab="tutorial">
+                <span class="tab-icon">📖</span>
+                Tutorial
+            </button>
         </nav>
 
         <!-- Main Content -->
@@ -187,6 +191,108 @@
                             <li>Seja paciente e cuidadoso durante o processo</li>
                             <li>Verifique cada código digitando no campo Decode</li>
                             <li>Anote as palavras BIP39 em um local seguro após a recuperação</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TUTORIAL Section -->
+            <section id="tutorial" class="section">
+                <div class="section-header">
+                    <h2>Tutorial: Como Gravar sua Stackbit 1248</h2>
+                    <p>Passo a passo completo baseado no <a href="https://stackbit.me/tutorial-stackbit-1248/" target="_blank" rel="noopener noreferrer">tutorial oficial</a></p>
+                </div>
+
+                <div class="tutorial-content">
+                    <div class="tutorial-warning">
+                        <span class="warning-icon">🔒</span>
+                        <div>
+                            <strong>Segurança em Primeiro Lugar:</strong>
+                            <p>Antes de começar, certifique-se de que você não está sob os olhares de nenhum tipo de câmera ou microfone (notebook, smartphone, câmeras de segurança, etc.)</p>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <h3>Passo 1: Anotar as Palavras</h3>
+                        <p>Anote suas 12 ou 24 palavras BIP39 em um papel. Mantenha este papel seguro e destrua-o após gravar na Stackbit.</p>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <h3>Passo 2: Encontrar os Números Correspondentes</h3>
+                        <ol class="tutorial-steps">
+                            <li>Acesse a <a href="https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt" target="_blank" rel="noopener noreferrer">lista oficial de palavras BIP39</a> no GitHub do Bitcoin</li>
+                            <li>Procure pelas suas palavras e anote o número correspondente ao lado de cada uma delas</li>
+                            <li><strong>Exemplo:</strong> LOUNGE – 1059</li>
+                        </ol>
+                        <p class="tutorial-note">
+                            <strong>⚠️ Importante:</strong> Não utilize a ferramenta buscar/localizar do seu navegador. Role a página até encontrar a palavra manualmente para maior segurança.
+                        </p>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <h3>Passo 3: Entender o Sistema de Quadros</h3>
+                        <p>Cada palavra tem 4 quadros que correspondem a 4 números:</p>
+                        <ul class="tutorial-list">
+                            <li><strong>Quadro 1:</strong> 0-2 (primeiro dígito)</li>
+                            <li><strong>Quadro 2:</strong> 0-9 (segundo dígito)</li>
+                            <li><strong>Quadro 3:</strong> 0-9 (terceiro dígito)</li>
+                            <li><strong>Quadro 4:</strong> 0-9 (quarto dígito)</li>
+                        </ul>
+                        <p>Com essa combinação, você consegue criar qualquer número dentre os 2048 possíveis da lista de palavras do BIP39.</p>
+                        <p class="tutorial-explanation">
+                            <strong>Como marcar:</strong> Você pode marcar 1 número, a soma de 2 ou 3 números, ou nenhum número para 0 (zero).
+                        </p>
+                        <div class="tutorial-example">
+                            <h4>Exemplo: Palavra 1059 (LOUNGE)</h4>
+                            <ul>
+                                <li>Quadro 1: 1 (marque o ponto 1)</li>
+                                <li>Quadro 2: 0 (não marque nada)</li>
+                                <li>Quadro 3: 5 (marque os pontos 1 + 4)</li>
+                                <li>Quadro 4: 9 (marque os pontos 1 + 8)</li>
+                            </ul>
+                        </div>
+                        <div class="tutorial-example">
+                            <h4>Exemplo: Diferença entre 0022 e 0220</h4>
+                            <p><strong>Palavra 0022:</strong></p>
+                            <ul>
+                                <li>Quadro 1: 0 (não marque nada)</li>
+                                <li>Quadro 2: 0 (não marque nada)</li>
+                                <li>Quadro 3: 2 (marque o ponto 2)</li>
+                                <li>Quadro 4: 2 (marque o ponto 2)</li>
+                            </ul>
+                            <p><strong>Palavra 0220:</strong></p>
+                            <ul>
+                                <li>Quadro 1: 0 (não marque nada)</li>
+                                <li>Quadro 2: 2 (marque o ponto 2)</li>
+                                <li>Quadro 3: 2 (marque o ponto 2)</li>
+                                <li>Quadro 4: 0 (não marque nada)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <h3>Passo 4: Gravar na Stackbit</h3>
+                        <ol class="tutorial-steps">
+                            <li>Marque com uma caneta permanente ou lápis na sua carteira</li>
+                            <li>Cheque as palavras cuidadosamente</li>
+                            <li>Bata com o punção utilizando um martelo</li>
+                            <li><strong>Não aplique força excessiva</strong> à pancada</li>
+                            <li>Remova o adesivo</li>
+                            <li><strong>Queime o adesivo</strong> para destruir qualquer rastro</li>
+                            <li>Armazene a sua Stackbit 1248 em um local seguro</li>
+                        </ol>
+                        <p class="tutorial-note">
+                            <strong>💡 Dica:</strong> Se for enterrar a sua carteira, considere embrulhá-la em plástico para proteção adicional.
+                        </p>
+                    </div>
+
+                    <div class="tutorial-resource">
+                        <h3>📚 Recursos Adicionais</h3>
+                        <ul>
+                            <li><a href="https://stackbit.me/tutorial-stackbit-1248/" target="_blank" rel="noopener noreferrer">Tutorial oficial no site Stackbit</a> - Inclui vídeo tutorial</li>
+                            <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt" target="_blank" rel="noopener noreferrer">Lista oficial de palavras BIP39</a></li>
+                            <li>Use a função <strong>Encode</strong> nesta ferramenta para verificar os códigos antes de gravar</li>
+                            <li>Use a função <strong>Decode</strong> para verificar os códigos após gravar</li>
                         </ul>
                     </div>
                 </div>
