@@ -258,6 +258,25 @@ const translations = {
         tutorialResources4Decode: 'Decode',
         tutorialResources4Text: 'function to verify codes after engraving',
         
+        // About Section
+        aboutTitle: 'About Stackbit 1248',
+        aboutDescription: 'Information about the physical Stackbit 1248 wallet',
+        specsTitle: 'Technical Specifications',
+        specDimensions: 'Dimensions:',
+        specWeight: 'Weight:',
+        specMaterial: 'Material:',
+        aboutInfoTitle: 'Information',
+        aboutInfoText1: 'The Stackbit 1248 is a physical stainless steel wallet designed to store BIP39 seed phrases securely and permanently.',
+        aboutInfoText2: 'The 1248 encoding system allows engraving up to 24 BIP39 words using only punch markings, without the need to write words directly.',
+        featuresTitle: 'Features',
+        feature1: 'Resistant to water, fire and corrosion',
+        feature2: 'Removable sticker for enhanced security',
+        feature3: 'Exclusive 1248 encoding system',
+        feature4: 'Compatible with all BIP39 wallets',
+        feature5: 'Made from high-quality 304 stainless steel',
+        aboutWarningTitle: 'Important:',
+        aboutWarningText: 'This web tool is only to assist with encoding and decoding. The physical Stackbit 1248 wallet must be purchased separately through the official website.',
+        
         // Footer
         footerWarning: 'Use offline only. Never share your seed.',
         footerCopyright: 'Stackbit 1248 Tool - BIP39 Compatible',
@@ -336,12 +355,16 @@ function updatePageLanguage(lang) {
         } else if (tabType === 'tutorial' && t.tutorial) {
             const span = tab.querySelector('span[data-i18n="tutorial"]');
             if (span) span.textContent = t.tutorial;
+        } else if (tabType === 'about' && t.about) {
+            const span = tab.querySelector('span[data-i18n="about"]');
+            if (span) span.textContent = t.about;
         }
     });
     
-    // Atualizar seções Recovery e Tutorial (conteúdo complexo)
+    // Atualizar seções Recovery, Tutorial e About (conteúdo complexo)
     updateRecoverySection(t);
     updateTutorialSection(t);
+    updateAboutSection(t);
     updateFooter(t);
 }
 
@@ -481,6 +504,54 @@ function updateTutorialSection(t) {
         resourcesList[2].innerHTML = `${t.tutorialResources3} <strong>${t.tutorialResources3Encode}</strong> ${t.tutorialResources3Text}`;
         resourcesList[3].innerHTML = `${t.tutorialResources4} <strong>${t.tutorialResources4Decode}</strong> ${t.tutorialResources4Text}`;
     }
+}
+
+// Função para atualizar seção About
+function updateAboutSection(t) {
+    const aboutTitle = document.querySelector('#about .section-header h2');
+    if (aboutTitle) aboutTitle.textContent = t.aboutTitle;
+    
+    const aboutDesc = document.querySelector('#about .section-header p:first-child');
+    if (aboutDesc) aboutDesc.textContent = t.aboutDescription;
+    
+    const specsTitle = document.querySelector('#about .specs-card h3');
+    if (specsTitle) specsTitle.textContent = t.specsTitle;
+    
+    const specsDimensions = document.querySelector('#about .spec-item:first-child .spec-label');
+    if (specsDimensions) specsDimensions.textContent = t.specDimensions;
+    
+    const specsWeight = document.querySelector('#about .spec-item:nth-child(2) .spec-label');
+    if (specsWeight) specsWeight.textContent = t.specWeight;
+    
+    const specsMaterial = document.querySelector('#about .spec-item:last-child .spec-label');
+    if (specsMaterial) specsMaterial.textContent = t.specMaterial;
+    
+    const aboutInfoTitle = document.querySelector('#about .about-info h3');
+    if (aboutInfoTitle) aboutInfoTitle.textContent = t.aboutInfoTitle;
+    
+    const aboutInfoTexts = document.querySelectorAll('#about .about-info p');
+    if (aboutInfoTexts.length >= 2) {
+        aboutInfoTexts[0].textContent = t.aboutInfoText1;
+        aboutInfoTexts[1].textContent = t.aboutInfoText2;
+    }
+    
+    const featuresTitle = document.querySelector('#about .about-features h3');
+    if (featuresTitle) featuresTitle.textContent = t.featuresTitle;
+    
+    const features = document.querySelectorAll('#about .about-features li');
+    if (features.length >= 5) {
+        features[0].textContent = t.feature1;
+        features[1].textContent = t.feature2;
+        features[2].textContent = t.feature3;
+        features[3].textContent = t.feature4;
+        features[4].textContent = t.feature5;
+    }
+    
+    const aboutWarningTitle = document.querySelector('#about .about-warning strong');
+    if (aboutWarningTitle) aboutWarningTitle.textContent = t.aboutWarningTitle;
+    
+    const aboutWarningText = document.querySelector('#about .about-warning p');
+    if (aboutWarningText) aboutWarningText.textContent = t.aboutWarningText;
 }
 
 // Função para atualizar footer
