@@ -498,7 +498,13 @@ function updateFooter(t) {
 }
 
 // Inicializar idioma ao carregar
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        const lang = getCurrentLanguage();
+        setLanguage(lang);
+    });
+} else {
+    // DOM já carregado
     const lang = getCurrentLanguage();
     setLanguage(lang);
-});
+}
