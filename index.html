@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'none'; base-uri 'self'; form-action 'none';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="no-referrer">
+    <!-- NOTA: X-Frame-Options e frame-ancestors só funcionam em headers HTTP, não em meta tags -->
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()">
+    <title>Stackbit 1248 - Ferramenta BIP39</title>
+    <meta name="description"
+        content="Ferramenta para codificação e recuperação de seed phrases BIP39 usando o sistema Stackbit 1248">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Manifest será carregado via JavaScript apenas se não estiver em file:// -->
+    <meta name="theme-color" content="#ff6b35">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Stackbit 1248">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <span class="digit">1</span>
+                    <span class="digit">2</span>
+                    <span class="digit">4</span>
+                    <span class="digit">8</span>
+                </div>
+                <h1>Stackbit 1248</h1>
+            </div>
+            <p class="subtitle">Ferramenta BIP39 para Backup em Metal</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs">
+            <button class="tab active" data-tab="encode">
+                <span class="tab-icon">→</span>
+                Encode
+            </button>
+            <button class="tab" data-tab="decode">
+                <span class="tab-icon">←</span>
+                Decode
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- ENCODE Section -->
+            <section id="encode" class="section active">
+                <div class="section-header">
+                    <h2>Encode: Palavra → Código 1248</h2>
+                    <p>Digite uma palavra BIP39 para ver seu código</p>
+                </div>
+
+                <div class="input-group">
+                    <label for="encode-input">Palavra BIP39</label>
+                    <input type="text" id="encode-input" placeholder="Ex: abandon, zoo, lounge..." autocomplete="off"
+                        spellcheck="false">
+                    <div id="encode-suggestions" class="suggestions"></div>
+                </div>
+
+                <div id="encode-result" class="result-card hidden">
+                    <div class="result-header">
+                        <span class="word-display" id="encode-word"></span>
+                        <span class="index-display">Índice: <span id="encode-index"></span></span>
+                    </div>
+                    <div class="code-display">
+                        <span class="code-label">Código 1248:</span>
+                        <span class="code-value" id="encode-code"></span>
+                    </div>
+                    <div class="quadros-container" id="encode-quadros"></div>
+                    <p class="quadros-hint">Marque os pontos indicados (●) com o punção</p>
+                </div>
+            </section>
+
+            <!-- DECODE Section -->
+            <section id="decode" class="section">
+                <div class="section-header">
+                    <h2>Decode: Código 1248 → Palavra</h2>
+                    <p>Digite o código de 4 dígitos para revelar a palavra</p>
+                </div>
+
+                <div class="code-input-group">
+                    <label>Código 1248 (0001-2048)</label>
+                    <div class="digit-inputs">
+                        <input type="text" class="digit-input" id="decode-d1" maxlength="1" pattern="[0-2]"
+                            placeholder="0">
+                        <input type="text" class="digit-input" id="decode-d2" maxlength="1" pattern="[0-9]"
+                            placeholder="0">
+                        <input type="text" class="digit-input" id="decode-d3" maxlength="1" pattern="[0-9]"
+                            placeholder="0">
+                        <input type="text" class="digit-input" id="decode-d4" maxlength="1" pattern="[0-9]"
+                            placeholder="0">
+                    </div>
+                </div>
+
+                <div id="decode-result" class="result-card hidden">
+                    <div class="result-header">
+                        <span class="word-display" id="decode-word"></span>
+                        <span class="index-display">Índice: <span id="decode-index"></span></span>
+                    </div>
+                    <div class="quadros-container" id="decode-quadros"></div>
+                </div>
+
+                <div id="decode-error" class="error-card hidden">
+                    <span class="error-icon">⚠</span>
+                    <span class="error-message">Código inválido. Use valores entre 0001 e 2048.</span>
+                </div>
+            </section>
+
+        </main>
+
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>⚠️ Use apenas offline. Nunca compartilhe sua seed.</p>
+            <p class="copyright">Stackbit 1248 Tool - BIP39 Compatible</p>
+        </footer>
+    </div>
+
+    <script src="bip39-words.js"></script>
+    <script>
+        // Carregar manifest.json apenas se não estiver em file://
+        if (location.protocol !== 'file:') {
+            const manifestLink = document.createElement('link');
+            manifestLink.rel = 'manifest';
+            manifestLink.href = 'manifest.json';
+            document.head.appendChild(manifestLink);
+        }
+    </script>
+    <script>
+        // ============================================
+        // PROTEÇÕES DE SEGURANÇA ANTI-HACKERS
+        // ============================================
+        
+        (function() {
+            'use strict';
+            
+            // 1. Proteção contra Prototype Pollution
+            if (typeof Object.freeze === 'function') {
+                Object.freeze(Object.prototype);
+                Object.freeze(Array.prototype);
+                Object.freeze(String.prototype);
+            }
+            
+            // 2. Proteção contra DOM Clobbering
+            const originalGetElementById = document.getElementById;
+            document.getElementById = function(id) {
+                if (typeof id !== 'string' || id.length === 0 || id.length > 100) {
+                    return null;
+                }
+                // Validar que não contém caracteres perigosos
+                if (!/^[a-zA-Z0-9_-]+$/.test(id)) {
+                    return null;
+                }
+                return originalGetElementById.call(document, id);
+            };
+            
+            // 3. Proteção do bip39Words - múltiplas camadas
+            if (typeof bip39Words !== 'undefined' && Array.isArray(bip39Words)) {
+                // Congelar o array
+                Object.freeze(bip39Words);
+                
+                // Proteger cada palavra individualmente
+                bip39Words.forEach((word, index) => {
+                    if (typeof word === 'string') {
+                        Object.freeze(Object.getOwnPropertyDescriptor(bip39Words, index));
+                    }
+                });
+                
+                // Proteger o objeto window.bip39Words
+                try {
+                    Object.defineProperty(window, 'bip39Words', {
+                        value: bip39Words,
+                        writable: false,
+                        configurable: false,
+                        enumerable: true
+                    });
+                } catch (e) {
+                    // Se falhar, usar freeze como fallback
+                    Object.freeze(window.bip39Words);
+                }
+                
+                // Proteção adicional: criar proxy para interceptar tentativas de modificação
+                // IMPORTANTE: Permitir acesso de leitura (get, has, ownKeys) mas bloquear modificações
+                try {
+                    window.bip39Words = new Proxy(bip39Words, {
+                        get: function(target, prop) {
+                            // Permitir acesso a todas as propriedades e métodos de leitura
+                            return target[prop];
+                        },
+                        set: function() { return false; },
+                        deleteProperty: function() { return false; },
+                        defineProperty: function() { return false; },
+                        has: function(target, prop) {
+                            return prop in target;
+                        },
+                        ownKeys: function(target) {
+                            return Object.keys(target);
+                        }
+                    });
+                } catch (e) {
+                    // Proxy não suportado, usar freeze
+                }
+            }
+            
+            // 4. Proteção contra timing attacks - normalizar tempo de resposta
+            // NOTA: Polyfill desabilitado por padrão para evitar problemas de performance
+            // Pode ser habilitado se necessário para ambientes de alta segurança
+            /*
+            const originalIndexOf = Array.prototype.indexOf;
+            Array.prototype.indexOf = function(searchElement) {
+                const start = performance.now();
+                const result = originalIndexOf.apply(this, arguments);
+                const elapsed = performance.now() - start;
+                
+                // Normalizar tempo mínimo de resposta (prevenir timing attacks)
+                const minTime = 0.1; // 0.1ms mínimo
+                if (elapsed < minTime) {
+                    const sleepTime = minTime - elapsed;
+                    // Usar busy-wait para normalizar (não usar setTimeout para precisão)
+                    const end = performance.now() + sleepTime;
+                    while (performance.now() < end) {
+                        // Busy wait
+                    }
+                }
+                
+                return result;
+            };
+            */
+            
+            // 5. Desabilitar funções perigosas
+            if (typeof window !== 'undefined') {
+                // Remover eval se possível (mas pode quebrar algumas libs)
+                // window.eval = function() { throw new Error('eval is disabled for security'); };
+                
+                // Proteger console em produção (opcional)
+                // if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                //     console.log = console.warn = console.error = function() {};
+                // }
+            }
+            
+            // 6. Proteção contra manipulação de eventos
+            // NOTA: Desabilitado para não bloquear eventos necessários do navegador
+            // A proteção de eventos pode ser muito restritiva e bloquear funcionalidades legítimas
+            /*
+            const originalAddEventListener = EventTarget.prototype.addEventListener;
+            EventTarget.prototype.addEventListener = function(type, listener, options) {
+                if (typeof type !== 'string' || type.length > 50) {
+                    return;
+                }
+                // Validar tipo de evento (apenas eventos seguros)
+                const safeEvents = ['click', 'input', 'keydown', 'focus', 'blur', 'change', 'load', 'DOMContentLoaded'];
+                if (!safeEvents.includes(type.toLowerCase())) {
+                    // Log seguro - não expor tipo de evento bloqueado (pode ser malicioso)
+                    if (typeof console !== 'undefined' && console.warn) {
+                        console.warn('Evento bloqueado por segurança');
+                    }
+                    return;
+                }
+                return originalAddEventListener.call(this, type, listener, options);
+            };
+            */
+            
+        })();
+    </script>
+    <script src="app.js"></script>
+</body>
+
+</html>
