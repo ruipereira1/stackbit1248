@@ -28,8 +28,8 @@
     --border-focus: rgba(247, 147, 26, 0.5);
 
     /* Typography */
-    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', Courier, monospace;
 
     /* Spacing */
     --spacing-xs: 4px;
@@ -1020,6 +1020,21 @@ body::before {
 
 .tutorial-resource a:hover {
     border-bottom-color: var(--accent-primary);
+}
+
+.offline-note {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.offline-note strong {
+    color: var(--text-primary);
 }
 
 /* Buttons */

@@ -61,6 +61,12 @@ self.addEventListener('fetch', (event) => {
 
       // Buscar da rede
       return fetch(event.request).then((response) => {
+        // Não cachear recursos externos (Google Fonts, etc)
+        const url = new URL(event.request.url);
+        if (url.origin !== location.origin) {
+          return response;
+        }
+
         // Não cachear se não for sucesso
         if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
@@ -79,6 +85,8 @@ self.addEventListener('fetch', (event) => {
         if (event.request.mode === 'navigate') {
           return caches.match('./index.html');
         }
+        // Para outros recursos, retornar null (não quebrar o site)
+        return null;
       });
     })
   );
