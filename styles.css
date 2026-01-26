@@ -198,6 +198,13 @@ body::before {
         position: static;
         justify-content: center;
         margin-top: var(--spacing-md);
+        top: auto;
+        right: auto;
+    }
+
+    .lang-btn {
+        font-size: 0.85rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
     }
 }
 
@@ -1416,23 +1423,151 @@ body::before {
     }
 }
 
-/* Responsive */
+/* Responsive - Tablets e Mobile */
+@media (max-width: 768px) {
+    .app-container {
+        padding: var(--spacing-sm);
+    }
+
+    .header {
+        padding: var(--spacing-lg) 0 var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .logo-icon .digit {
+        font-size: 1.4rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .result-card {
+        padding: var(--spacing-md);
+    }
+
+    .word-display {
+        font-size: 1.4rem;
+    }
+
+    .code-value {
+        font-size: 1.6rem;
+        letter-spacing: 0.2em;
+    }
+
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contribute-buttons {
+        flex-direction: column;
+    }
+
+    .btn-github {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .pdf-buttons {
+        flex-direction: column;
+    }
+
+    .btn-pdf {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Responsive - Mobile */
 @media (max-width: 600px) {
+    html {
+        font-size: 14px;
+    }
+
+    .app-container {
+        padding: var(--spacing-xs);
+    }
+
+    .header {
+        padding: var(--spacing-md) 0;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .logo-icon {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .logo-icon .digit {
+        font-size: 1.2rem;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+        margin-top: var(--spacing-xs);
+    }
+
     .tabs {
         flex-wrap: nowrap;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         justify-content: flex-start;
+        padding: var(--spacing-xs);
+        scrollbar-width: thin;
+    }
+
+    .tabs::-webkit-scrollbar {
+        height: 4px;
     }
 
     .tab {
         padding: var(--spacing-sm) var(--spacing-md);
         font-size: 0.8rem;
         flex: 0 0 auto;
+        min-width: fit-content;
     }
 
     .tab-icon {
         display: none;
+    }
+
+    .section {
+        padding: var(--spacing-md) 0;
+    }
+
+    .section-header {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .section-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .section-header p {
+        font-size: 0.85rem;
+    }
+
+    .input-group {
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .input-group input {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 1rem;
+    }
+
+    .digit-inputs {
+        gap: var(--spacing-sm);
     }
 
     .digit-input {
@@ -1441,116 +1576,218 @@ body::before {
         font-size: 1.4rem;
     }
 
-    .quadros-container {
-        gap: var(--spacing-md);
-        flex-wrap: wrap;
-        padding: var(--spacing-sm);
+    .result-card {
+        padding: var(--spacing-md);
+        margin-top: var(--spacing-md);
     }
-    
-    /* Quadros 1248 - Responsividade */
-    .quadros-1248-line-number {
-        width: 50px;
-        min-width: 50px;
-        font-size: 1.8rem;
+
+    .result-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
     }
-    
-    .quadro-1248-cell {
-        height: 45px;
-        min-height: 45px;
-    }
-    
-    .quadro-1248-number {
+
+    .word-display {
         font-size: 1.3rem;
     }
-    
-    .quadro-1248-dot {
-        width: 10px;
-        height: 10px;
-        top: 6px;
+
+    .code-display {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md);
     }
 
-}
-
-/* Raspberry Pi Zero / Small Display Optimization (<= 320px) */
-@media (max-width: 320px) {
-    :root {
-        --spacing-md: 8px;
-        --spacing-lg: 12px;
-        --spacing-xl: 16px;
+    .code-value {
+        font-size: 1.5rem;
+        letter-spacing: 0.15em;
     }
 
-    .app-container {
-        padding: 4px;
+    .quadros-container {
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        margin: var(--spacing-md) 0;
     }
 
-    .header {
-        padding: var(--spacing-lg) 0;
-    }
-
-    .header h1 {
-        font-size: 1.2rem;
-    }
-    
-    /* Quadros 1248 - Pequenas telas */
+    /* Quadros 1248 - Responsividade Mobile */
     .quadros-1248-lines {
         max-width: 100%;
     }
-    
-    .quadros-1248-line-number {
-        width: 35px;
-        min-width: 35px;
-        font-size: 1.3rem;
-    }
-    
-    .quadro-1248-cell {
-        height: 35px;
-        min-height: 35px;
-    }
-    
-    .quadro-1248-number {
-        font-size: 1rem;
-    }
-    
-    .quadro-1248-dot {
-        width: 7px;
-        height: 7px;
-        top: 4px;
-    }
-    
-    .quadros-1248-quadros {
-        padding: 2px;
-    }
-    
+
     .quadros-1248-line {
-        border-width: 2px;
+        margin-bottom: 3px;
     }
-    
+
+    .quadros-1248-line-number {
+        width: 45px;
+        min-width: 45px;
+        font-size: 1.6rem;
+    }
+
     .quadro-1248 {
-        border-right-width: 2px;
-    }
-    
-    .quadro-1248-top {
-        border-bottom-width: 2px;
+        min-width: 70px;
+        max-width: 90px;
     }
 
-    .logo-icon .digit {
-        font-size: 1rem;
+    .quadro-1248-cell {
+        height: 40px;
+        min-height: 40px;
+        padding: 4px;
     }
 
-    .digit-input {
-        width: 40px;
-        height: 50px;
+    .quadro-1248-number {
+        font-size: 1.1rem;
+    }
+
+    .quadro-1248-dot {
+        width: 9px;
+        height: 9px;
+    }
+
+    .quadros-hint {
+        font-size: 0.8rem;
+        padding: var(--spacing-sm);
+    }
+
+    /* Recovery Section Mobile */
+    .recovery-pdf-section,
+    .recovery-method,
+    .recovery-tips {
+        padding: var(--spacing-md);
+    }
+
+    .recovery-method h3,
+    .recovery-tips h3 {
+        font-size: 1.1rem;
+    }
+
+    .recovery-steps {
+        padding-left: var(--spacing-md);
+        font-size: 0.9rem;
+    }
+
+    .recovery-warning {
+        flex-direction: column;
+        padding: var(--spacing-md);
+    }
+
+    .warning-icon {
+        font-size: 1.5rem;
+    }
+
+    /* Tutorial Section Mobile */
+    .tutorial-step {
+        padding: var(--spacing-md);
+    }
+
+    .tutorial-step h3 {
         font-size: 1.2rem;
     }
 
-    /* Stack visual quadros nicely */
-    .quadros-container {
-        justify-content: center;
-        gap: 8px;
+    .tutorial-step h4 {
+        font-size: 1.1rem;
     }
 
-    .quadro {
-        transform: scale(0.9);
+    .tutorial-steps,
+    .tutorial-list {
+        padding-left: var(--spacing-md);
+        font-size: 0.9rem;
+    }
+
+    /* About Section Mobile */
+    .specs-card,
+    .about-info,
+    .about-features,
+    .about-contribute {
+        padding: var(--spacing-md);
+    }
+
+    .specs-card h3,
+    .about-info h3,
+    .about-features h3,
+    .about-contribute h3 {
+        font-size: 1.1rem;
+    }
+
+    .spec-item {
+        padding: var(--spacing-sm);
+    }
+
+    .spec-label {
+        font-size: 0.85rem;
+    }
+
+    .spec-value {
+        font-size: 1rem;
+    }
+
+    .about-warning {
+        flex-direction: column;
+        padding: var(--spacing-md);
+    }
+
+    .contribute-buttons {
+        gap: var(--spacing-sm);
+    }
+
+    .btn-github {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.9rem;
+    }
+
+    /* Footer Mobile */
+    .footer {
+        padding: var(--spacing-lg) 0;
+        font-size: 0.8rem;
+    }
+
+    .footer .credits {
+        font-size: 0.7rem;
+        line-height: 1.4;
+    }
+
+    .footer-github-link {
+        font-size: 0.85rem;
+    }
+
+    /* Buttons Mobile */
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: 0.9rem;
+    }
+
+    .btn-large {
+        padding: var(--spacing-md);
+        font-size: 1rem;
+    }
+}
+
+/* Responsive - Extra Small Mobile (max-width: 400px) */
+@media (max-width: 400px) {
+    html {
+        font-size: 14px;
+    }
+
+    .header h1 {
+        font-size: 1.3rem;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+    }
+
+    .logo-icon .digit {
+        font-size: 1.2rem;
+    }
+
+    .tab {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.8rem;
+    }
+
+    .digit-input {
+        width: 50px;
+        height: 60px;
+        font-size: 1.4rem;
     }
 
     .word-display {
@@ -1558,34 +1795,123 @@ body::before {
     }
 
     .code-value {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+        letter-spacing: 0.15em;
     }
-
-    .btn-large {
-        padding: 10px;
-        font-size: 0.9rem;
-    }
-
-    /* Compact Lists */
 }
 
-/* Responsive - Small screens */
+/* Responsive - Very Small Screens (max-width: 320px) */
 @media (max-width: 320px) {
+    html {
+        font-size: 13px;
+    }
+
     :root {
-    width: 240px;
-    height: 240px;
-    min-height: 240px;
-    max-width: 240px;
-    max-height: 240px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background: var(--bg-primary);
-    border: 2px solid #555;
-    padding: 2px;
-    /* Minimal padding */
-    margin: 0;
-    border-radius: 0;
-    scrollbar-width: none;
-    font-size: 12px;
-    /* Smaller base font */
+        --spacing-md: 8px;
+        --spacing-lg: 12px;
+        --spacing-xl: 16px;
+    }
+
+    .app-container {
+        padding: var(--spacing-xs);
+    }
+
+    .header {
+        padding: var(--spacing-md) 0;
+    }
+
+    .header h1 {
+        font-size: 1.1rem;
+    }
+
+    .logo-icon {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .logo-icon .digit {
+        font-size: 1rem;
+    }
+
+    .tab {
+        padding: 6px var(--spacing-sm);
+        font-size: 0.75rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .input-group input {
+        font-size: 0.9rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .digit-input {
+        width: 45px;
+        height: 55px;
+        font-size: 1.2rem;
+    }
+
+    .word-display {
+        font-size: 1.1rem;
+    }
+
+    .code-value {
+        font-size: 1.1rem;
+    }
+
+    /* Quadros 1248 - Telas muito pequenas */
+    .quadros-1248-line-number {
+        width: 35px;
+        min-width: 35px;
+        font-size: 1.2rem;
+    }
+
+    .quadro-1248 {
+        min-width: 60px;
+        max-width: 75px;
+    }
+
+    .quadro-1248-cell {
+        height: 32px;
+        min-height: 32px;
+        padding: 2px;
+    }
+
+    .quadro-1248-number {
+        font-size: 1rem;
+    }
+
+    .quadro-1248-dot {
+        width: 7px;
+        height: 7px;
+    }
+
+    .quadros-1248-quadros {
+        padding: 2px;
+        gap: 2px;
+    }
+
+    .quadros-1248-line {
+        border-width: 2px;
+    }
+
+    .result-card {
+        padding: var(--spacing-sm);
+    }
+
+    .btn,
+    .btn-pdf,
+    .btn-github {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.85rem;
+    }
+
+    .footer {
+        font-size: 0.75rem;
+    }
+
+    .footer .credits {
+        font-size: 0.65rem;
+    }
 }
