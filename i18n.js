@@ -145,8 +145,14 @@ const translations = {
         feature5: 'Fabricada em aço inoxidável 304 de alta qualidade',
         aboutWarningTitle: 'Importante:',
         aboutWarningText: 'Esta ferramenta web é apenas para auxiliar na codificação e decodificação. A carteira física Stackbit 1248 deve ser adquirida separadamente através do site oficial.',
+        contributeTitle: '🤝 Contribuir com o Projeto',
+        contributeText: 'Este é um projeto open source. Contribuições são bem-vindas!',
+        viewOnGitHub: 'Ver no GitHub',
+        reportIssue: 'Reportar Bug',
+        contributeGuide: 'Guia de Contribuição',
         
         // Footer
+        viewSourceCode: 'Ver código-fonte no GitHub',
         footerWarning: '⚠️ Use apenas offline. Nunca compartilhe sua seed.',
         footerCopyright: 'Stackbit 1248 Tool - BIP39 Compatible',
         footerCredits: 'Inspirado no sistema',
@@ -295,8 +301,14 @@ const translations = {
         feature5: 'Made from high-quality 304 stainless steel',
         aboutWarningTitle: 'Important:',
         aboutWarningText: 'This web tool is only to assist with encoding and decoding. The physical Stackbit 1248 wallet must be purchased separately through the official website.',
+        contributeTitle: '🤝 Contribute to the Project',
+        contributeText: 'This is an open source project. Contributions are welcome!',
+        viewOnGitHub: 'View on GitHub',
+        reportIssue: 'Report Bug',
+        contributeGuide: 'Contributing Guide',
         
         // Footer
+        viewSourceCode: 'View source code on GitHub',
         footerWarning: 'Use offline only. Never share your seed.',
         footerCopyright: 'Stackbit 1248 Tool - BIP39 Compatible',
         footerCredits: 'Inspired by the',
@@ -571,6 +583,24 @@ function updateAboutSection(t) {
     
     const aboutWarningText = document.querySelector('#about .about-warning p');
     if (aboutWarningText) aboutWarningText.textContent = t.aboutWarningText;
+    
+    const contributeTitle = document.querySelector('#about .about-contribute h3');
+    if (contributeTitle) contributeTitle.textContent = t.contributeTitle;
+    
+    const contributeText = document.querySelector('#about .about-contribute p');
+    if (contributeText) contributeText.textContent = t.contributeText;
+    
+    const viewGitHubBtn = document.querySelector('#about .btn-github:first-child span:last-child');
+    if (viewGitHubBtn) viewGitHubBtn.textContent = t.viewOnGitHub;
+    
+    const reportIssueBtn = document.querySelector('#about .btn-github-secondary:first-of-type span:last-child');
+    if (reportIssueBtn) reportIssueBtn.textContent = t.reportIssue;
+    
+    const contributeGuideBtn = document.querySelector('#about .btn-github-secondary:last-of-type span:last-child');
+    if (contributeGuideBtn) contributeGuideBtn.textContent = t.contributeGuide;
+    
+    const footerGitHubLink = document.querySelector('.footer-github-link span:last-child');
+    if (footerGitHubLink) footerGitHubLink.textContent = t.viewSourceCode;
 }
 
 // Função para atualizar footer
