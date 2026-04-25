@@ -320,19 +320,27 @@ const translations = {
 
 // Função para obter o idioma atual
 function getCurrentLanguage() {
-    const saved = localStorage.getItem('stackbit-language');
-    if (saved && (saved === 'pt-BR' || saved === 'en')) {
-        return saved;
+    try {
+        const saved = localStorage.getItem('stackbit-language');
+        if (saved && (saved === 'pt-BR' || saved === 'en')) {
+            return saved;
+        }
+    } catch (e) {
+        // localStorage pode falhar em modo privado ou file://
     }
     // Detectar idioma do navegador
-    const browserLang = navigator.language || navigator.userLanguage;
+    const browserLang = (navigator.language || navigator.userLanguage || 'en');
     return browserLang.startsWith('pt') ? 'pt-BR' : 'en';
 }
 
 // Função para definir o idioma
 function setLanguage(lang) {
     if (lang !== 'pt-BR' && lang !== 'en') return;
-    localStorage.setItem('stackbit-language', lang);
+    try {
+        localStorage.setItem('stackbit-language', lang);
+    } catch (e) {
+        // localStorage pode falhar em modo privado ou file://
+    }
     document.documentElement.lang = lang;
     updatePageLanguage(lang);
 }

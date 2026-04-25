@@ -455,11 +455,9 @@
             'use strict';
             
             // 1. Proteção contra Prototype Pollution
-            if (typeof Object.freeze === 'function') {
-                Object.freeze(Object.prototype);
-                Object.freeze(Array.prototype);
-                Object.freeze(String.prototype);
-            }
+            // NOTA: NÃO congelar Object.prototype, Array.prototype ou String.prototype —
+            // isso quebra indexOf, startsWith, forEach e outros métodos nativos essenciais.
+            // A proteção correta é feita via validação de input e sanitização.
             
             // 2. Proteção contra DOM Clobbering
             const originalGetElementById = document.getElementById;
@@ -474,53 +472,14 @@
                 return originalGetElementById.call(document, id);
             };
             
-            // 3. Proteção do bip39Words - múltiplas camadas
-            if (typeof bip39Words !== 'undefined' && Array.isArray(bip39Words)) {
-                // Congelar o array
-                Object.freeze(bip39Words);
-                
-                // Proteger cada palavra individualmente
-                bip39Words.forEach((word, index) => {
-                    if (typeof word === 'string') {
-                        Object.freeze(Object.getOwnPropertyDescriptor(bip39Words, index));
-                    }
-                });
-                
-                // Proteger o objeto window.bip39Words
-                try {
-                    Object.defineProperty(window, 'bip39Words', {
-                        value: bip39Words,
-                        writable: false,
-                        configurable: false,
-                        enumerable: true
-                    });
-                } catch (e) {
-                    // Se falhar, usar freeze como fallback
-                    Object.freeze(window.bip39Words);
+            // 3. Proteção do bip39Words — executada após o carregamento do script
+            // (o freeze é feito no evento DOMContentLoaded em app.js, quando bip39Words já existe)
+            window.addEventListener('DOMContentLoaded', function() {
+                if (typeof bip39Words !== 'undefined' && Array.isArray(bip39Words)) {
+                    // Congelar o array (impede modificações)
+                    try { Object.freeze(bip39Words); } catch(e) {}
                 }
-                
-                // Proteção adicional: criar proxy para interceptar tentativas de modificação
-                // IMPORTANTE: Permitir acesso de leitura (get, has, ownKeys) mas bloquear modificações
-                try {
-                    window.bip39Words = new Proxy(bip39Words, {
-                        get: function(target, prop) {
-                            // Permitir acesso a todas as propriedades e métodos de leitura
-                            return target[prop];
-                        },
-                        set: function() { return false; },
-                        deleteProperty: function() { return false; },
-                        defineProperty: function() { return false; },
-                        has: function(target, prop) {
-                            return prop in target;
-                        },
-                        ownKeys: function(target) {
-                            return Object.keys(target);
-                        }
-                    });
-                } catch (e) {
-                    // Proxy não suportado, usar freeze
-                }
-            }
+            });
             
             // 4. Proteção contra timing attacks - normalizar tempo de resposta
             // NOTA: Polyfill desabilitado por padrão para evitar problemas de performance
