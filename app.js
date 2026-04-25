@@ -131,8 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         secureConsole.error('Erro: Dicionário BIP39 inválido');
         // Usar método não-bloqueante em vez de alert()
         const errorDiv = document.createElement('div');
-        errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#ff4444;color:white;padding:20px;text-align:center;z-index:10000;';
-        errorDiv.textContent = 'Erro: Dicionário BIP39 não carregado. Recarregue a página.';
+        errorDiv.className = 'error-banner';
         document.body.appendChild(errorDiv);
         return;
     }
@@ -141,8 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bip39Words.length < 2048) {
         secureConsole.error('Erro: Dicionário BIP39 incompleto');
         const errorDiv = document.createElement('div');
-        errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#ff4444;color:white;padding:20px;text-align:center;z-index:10000;';
-        errorDiv.textContent = 'Erro: Dicionário BIP39 incompleto. Recarregue a página.';
+        errorDiv.className = 'error-banner';
         document.body.appendChild(errorDiv);
         return;
     }
