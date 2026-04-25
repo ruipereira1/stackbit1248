@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'none'; base-uri 'self'; form-action 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'none'; base-uri 'self'; form-action 'none';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="no-referrer">
     <!-- NOTA: X-Frame-Options e frame-ancestors só funcionam em headers HTTP, não em meta tags -->
@@ -32,19 +32,7 @@
     <meta name="twitter:title" content="Stackbit 1248 - Ferramenta BIP39">
     <meta name="twitter:description" content="Ferramenta offline para codificação e recuperação de seed phrases BIP39 usando o sistema Stackbit 1248">
     
-    <!-- Fontes do Google (opcional - funciona offline sem elas) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-        media="print"
-        onload="this.media='all'">
-    <noscript>
-        <link
-            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap"
-            rel="stylesheet">
-    </noscript>
+    
     <link rel="stylesheet" href="styles.css">
     <!-- Manifest será carregado via JavaScript apenas se não estiver em file:// -->
     <meta name="theme-color" content="#ff6b35">
@@ -437,132 +425,7 @@
 
     <script src="bip39-words.js"></script>
     <script src="i18n.js"></script>
-    <script>
-        // Carregar manifest.json apenas se não estiver em file://
-        if (location.protocol !== 'file:') {
-            const manifestLink = document.createElement('link');
-            manifestLink.rel = 'manifest';
-            manifestLink.href = 'manifest.json';
-            document.head.appendChild(manifestLink);
-        }
-    </script>
-    <script>
-        // ============================================
-        // PROTEÇÕES DE SEGURANÇA ANTI-HACKERS
-        // ============================================
-        
-        (function() {
-            'use strict';
-            
-            // 1. Proteção contra Prototype Pollution
-            // NOTA: NÃO congelar Object.prototype, Array.prototype ou String.prototype —
-            // isso quebra indexOf, startsWith, forEach e outros métodos nativos essenciais.
-            // A proteção correta é feita via validação de input e sanitização.
-            
-            // 2. Proteção contra DOM Clobbering
-            const originalGetElementById = document.getElementById;
-            document.getElementById = function(id) {
-                if (typeof id !== 'string' || id.length === 0 || id.length > 100) {
-                    return null;
-                }
-                // Validar que não contém caracteres perigosos
-                if (!/^[a-zA-Z0-9_-]+$/.test(id)) {
-                    return null;
-                }
-                return originalGetElementById.call(document, id);
-            };
-            
-            // 3. Proteção do bip39Words — executada após o carregamento do script
-            // (o freeze é feito no evento DOMContentLoaded em app.js, quando bip39Words já existe)
-            window.addEventListener('DOMContentLoaded', function() {
-                if (typeof bip39Words !== 'undefined' && Array.isArray(bip39Words)) {
-                    // Congelar o array (impede modificações)
-                    try { Object.freeze(bip39Words); } catch(e) {}
-                }
-            });
-            
-            // 4. Proteção contra timing attacks - normalizar tempo de resposta
-            // NOTA: Polyfill desabilitado por padrão para evitar problemas de performance
-            // Pode ser habilitado se necessário para ambientes de alta segurança
-            /*
-            const originalIndexOf = Array.prototype.indexOf;
-            Array.prototype.indexOf = function(searchElement) {
-                const start = performance.now();
-                const result = originalIndexOf.apply(this, arguments);
-                const elapsed = performance.now() - start;
-                
-                // Normalizar tempo mínimo de resposta (prevenir timing attacks)
-                const minTime = 0.1; // 0.1ms mínimo
-                if (elapsed < minTime) {
-                    const sleepTime = minTime - elapsed;
-                    // Usar busy-wait para normalizar (não usar setTimeout para precisão)
-                    const end = performance.now() + sleepTime;
-                    while (performance.now() < end) {
-                        // Busy wait
-                    }
-                }
-                
-                return result;
-            };
-            */
-            
-            // 5. Desabilitar funções perigosas
-            if (typeof window !== 'undefined') {
-                // Remover eval se possível (mas pode quebrar algumas libs)
-                // window.eval = function() { throw new Error('eval is disabled for security'); };
-                
-                // Proteger console em produção (opcional)
-                // if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-                //     console.log = console.warn = console.error = function() {};
-                // }
-            }
-            
-            // 6. Proteção contra manipulação de eventos
-            // NOTA: Desabilitado para não bloquear eventos necessários do navegador
-            // A proteção de eventos pode ser muito restritiva e bloquear funcionalidades legítimas
-            /*
-            const originalAddEventListener = EventTarget.prototype.addEventListener;
-            EventTarget.prototype.addEventListener = function(type, listener, options) {
-                if (typeof type !== 'string' || type.length > 50) {
-                    return;
-                }
-                // Validar tipo de evento (apenas eventos seguros)
-                const safeEvents = ['click', 'input', 'keydown', 'focus', 'blur', 'change', 'load', 'DOMContentLoaded'];
-                if (!safeEvents.includes(type.toLowerCase())) {
-                    // Log seguro - não expor tipo de evento bloqueado (pode ser malicioso)
-                    if (typeof console !== 'undefined' && console.warn) {
-                        console.warn('Evento bloqueado por segurança');
-                    }
-                    return;
-                }
-                return originalAddEventListener.call(this, type, listener, options);
-            };
-            */
-            
-        })();
-    </script>
-    <script>
-        // Inicializar seletor de idioma
-        document.addEventListener('DOMContentLoaded', () => {
-            const langButtons = document.querySelectorAll('.lang-btn');
-            const currentLang = getCurrentLanguage();
-            
-            // Destacar idioma atual
-            langButtons.forEach(btn => {
-                if (btn.getAttribute('data-lang') === currentLang) {
-                    btn.classList.add('active');
-                }
-                
-                btn.addEventListener('click', () => {
-                    const lang = btn.getAttribute('data-lang');
-                    setLanguage(lang);
-                    // Atualizar botões ativos
-                    langButtons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                });
-            });
-        });
-    </script>
+    <script src="security.js"></script>
     <script src="app.js"></script>
 </body>
 

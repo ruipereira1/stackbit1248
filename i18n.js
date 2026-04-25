@@ -407,55 +407,85 @@ function updatePageLanguage(lang) {
     updateFooter(t);
 }
 
+// Helper: criar elemento <a> de forma segura (sem innerHTML)
+function createSafeLink(href, text, target) {
+    const a = document.createElement('a');
+    a.href = href;
+    a.textContent = text;
+    a.target = target || '_blank';
+    a.rel = 'noopener noreferrer';
+    return a;
+}
+
+// Helper: definir conteúdo de um elemento com prefixo de emoji + texto (sem innerHTML)
+function setTextWithEmoji(el, emoji, text) {
+    el.textContent = emoji + ' ' + text;
+}
+
+// Helper: definir conteúdo com <strong> + texto (sem innerHTML)
+function setStrongText(el, strongText, restText) {
+    el.textContent = '';
+    const strong = document.createElement('strong');
+    strong.textContent = strongText;
+    el.appendChild(strong);
+    el.appendChild(document.createTextNode(' ' + restText));
+}
+
+// Helper: atualizar botão PDF preservando o ícone (sem innerHTML)
+function updatePdfButton(btn, text) {
+    if (!btn) return;
+    const icon = btn.querySelector('.pdf-icon');
+    const iconText = icon ? icon.textContent : '';
+    btn.textContent = '';
+    if (iconText) {
+        const iconSpan = document.createElement('span');
+        iconSpan.className = 'pdf-icon';
+        iconSpan.textContent = iconText;
+        btn.appendChild(iconSpan);
+        btn.appendChild(document.createTextNode(' ' + text));
+    } else {
+        btn.textContent = text;
+    }
+}
+
 // Função para atualizar seção Recovery
 function updateRecoverySection(t) {
     const recoveryGuide = document.querySelector('#recovery .recovery-pdf-section h3');
-    if (recoveryGuide) recoveryGuide.innerHTML = `📄 ${t.recoveryGuide}`;
-    
+    if (recoveryGuide) setTextWithEmoji(recoveryGuide, '📄', t.recoveryGuide);
+
     const recoveryGuideDesc = document.querySelector('#recovery .recovery-pdf-section p');
     if (recoveryGuideDesc) recoveryGuideDesc.textContent = t.recoveryGuideDesc;
-    
-    const downloadBtn = document.querySelector('#recovery .btn-pdf:first-child');
-    if (downloadBtn) {
-        const icon = downloadBtn.querySelector('.pdf-icon');
-        downloadBtn.innerHTML = icon ? `${icon.outerHTML} ${t.downloadPDF}` : t.downloadPDF;
-    }
-    
-    const viewBtn = document.querySelector('#recovery .btn-pdf.btn-pdf-view');
-    if (viewBtn) {
-        const icon = viewBtn.querySelector('.pdf-icon');
-        viewBtn.innerHTML = icon ? `${icon.outerHTML} ${t.viewPDF}` : t.viewPDF;
-    }
-    
+
+    updatePdfButton(document.querySelector('#recovery .btn-pdf:first-child'), t.downloadPDF);
+    updatePdfButton(document.querySelector('#recovery .btn-pdf.btn-pdf-view'), t.viewPDF);
+
     // Métodos de recuperação
     const method1 = document.querySelector('#recovery .recovery-method:first-of-type h3');
     if (method1) method1.textContent = t.recoveryMethod1;
-    
+
     const method1Steps = document.querySelectorAll('#recovery .recovery-method:first-of-type li');
     if (method1Steps.length >= 3) {
         method1Steps[0].textContent = t.recoveryMethod1Step1;
         method1Steps[1].textContent = t.recoveryMethod1Step2;
         method1Steps[2].textContent = t.recoveryMethod1Step3;
     }
-    
+
     const method2 = document.querySelector('#recovery .recovery-method:last-of-type h3');
     if (method2) method2.textContent = t.recoveryMethod2;
-    
+
     const method2Steps = document.querySelectorAll('#recovery .recovery-method:last-of-type li');
     if (method2Steps.length >= 3) {
         method2Steps[0].textContent = t.recoveryMethod2Step1;
         method2Steps[1].textContent = t.recoveryMethod2Step2;
         method2Steps[2].textContent = t.recoveryMethod2Step3;
     }
-    
+
     const recoveryNote = document.querySelector('#recovery .recovery-note');
-    if (recoveryNote) {
-        recoveryNote.innerHTML = `<strong>${t.recoveryTip}</strong> ${t.recoveryTipText}`;
-    }
-    
+    if (recoveryNote) setStrongText(recoveryNote, t.recoveryTip, t.recoveryTipText);
+
     const recoveryWarning = document.querySelector('#recovery .recovery-warning strong');
     if (recoveryWarning) recoveryWarning.textContent = t.recoveryImportant;
-    
+
     const recoveryWarningItems = document.querySelectorAll('#recovery .recovery-warning li');
     if (recoveryWarningItems.length >= 4) {
         recoveryWarningItems[0].textContent = t.recoveryImportant1;
@@ -463,10 +493,10 @@ function updateRecoverySection(t) {
         recoveryWarningItems[2].textContent = t.recoveryImportant3;
         recoveryWarningItems[3].textContent = t.recoveryImportant4;
     }
-    
+
     const recoveryTipsTitle = document.querySelector('#recovery .recovery-tips h3');
-    if (recoveryTipsTitle) recoveryTipsTitle.innerHTML = `💡 ${t.recoveryTipsTitle}`;
-    
+    if (recoveryTipsTitle) setTextWithEmoji(recoveryTipsTitle, '💡', t.recoveryTipsTitle);
+
     const recoveryTips = document.querySelectorAll('#recovery .recovery-tips li');
     if (recoveryTips.length >= 5) {
         recoveryTips[0].textContent = t.recoveryTips1;
@@ -502,14 +532,21 @@ function updateTutorialSection(t) {
         }
         const step2List = steps[1].querySelectorAll('li');
         if (step2List.length >= 3) {
-            step2List[0].innerHTML = `${t.tutorialStep2Text1} <a href="https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt" target="_blank" rel="noopener noreferrer">${t.tutorialStep2Text2}</a> ${t.tutorialStep2Text3}`;
+            // li[0]: texto + link + texto
+            step2List[0].textContent = '';
+            step2List[0].appendChild(document.createTextNode(t.tutorialStep2Text1 + ' '));
+            step2List[0].appendChild(createSafeLink(
+                'https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt',
+                t.tutorialStep2Text2
+            ));
+            step2List[0].appendChild(document.createTextNode(' ' + t.tutorialStep2Text3));
+            // li[1]: texto simples
             step2List[1].textContent = t.tutorialStep2Text4;
-            step2List[2].innerHTML = `<strong>${t.tutorialStep2Example}</strong> ${t.tutorialStep2ExampleText}`;
+            // li[2]: <strong> + texto
+            setStrongText(step2List[2], t.tutorialStep2Example, t.tutorialStep2ExampleText);
         }
         const step2Warning = steps[1].querySelector('.tutorial-note');
-        if (step2Warning) {
-            step2Warning.innerHTML = `<strong>⚠️ ${t.tutorialStep2Warning}</strong> ${t.tutorialStep2WarningText}`;
-        }
+        if (step2Warning) setStrongText(step2Warning, '⚠️ ' + t.tutorialStep2Warning, t.tutorialStep2WarningText);
         
         // Passo 3 - conteúdo complexo, atualizar partes principais
         if (steps[2].querySelector('h3')) {
@@ -525,23 +562,48 @@ function updateTutorialSection(t) {
             step4List[0].textContent = t.tutorialStep4Text1;
             step4List[1].textContent = t.tutorialStep4Text2;
             step4List[2].textContent = t.tutorialStep4Text3;
-            step4List[3].innerHTML = `<strong>${t.tutorialStep4Text4}</strong>`;
+            step4List[3].textContent = '';
+            const strong4 = document.createElement('strong');
+            strong4.textContent = t.tutorialStep4Text4;
+            step4List[3].appendChild(strong4);
             step4List[4].textContent = t.tutorialStep4Text5;
             step4List[5].textContent = t.tutorialStep4Text6;
             step4List[6].textContent = t.tutorialStep4Text7;
         }
     }
     
-    // Recursos
     const resourcesTitle = document.querySelector('#tutorial .tutorial-resource h3');
-    if (resourcesTitle) resourcesTitle.textContent = `📚 ${t.tutorialResources}`;
-    
+    if (resourcesTitle) setTextWithEmoji(resourcesTitle, '📚', t.tutorialResources);
+
     const resourcesList = document.querySelectorAll('#tutorial .tutorial-resource li');
     if (resourcesList.length >= 4) {
-        resourcesList[0].innerHTML = `<a href="https://stackbit.me/tutorial-stackbit-1248/" target="_blank" rel="noopener noreferrer">${t.tutorialResources1}</a> ${t.tutorialResources1Desc}`;
-        resourcesList[1].innerHTML = `<a href="https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt" target="_blank" rel="noopener noreferrer">${t.tutorialResources2}</a>`;
-        resourcesList[2].innerHTML = `${t.tutorialResources3} <strong>${t.tutorialResources3Encode}</strong> ${t.tutorialResources3Text}`;
-        resourcesList[3].innerHTML = `${t.tutorialResources4} <strong>${t.tutorialResources4Decode}</strong> ${t.tutorialResources4Text}`;
+        // li[0]: link + texto descritivo
+        resourcesList[0].textContent = '';
+        resourcesList[0].appendChild(createSafeLink('https://stackbit.me/tutorial-stackbit-1248/', t.tutorialResources1));
+        resourcesList[0].appendChild(document.createTextNode(' ' + t.tutorialResources1Desc));
+
+        // li[1]: só link
+        resourcesList[1].textContent = '';
+        resourcesList[1].appendChild(createSafeLink(
+            'https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt',
+            t.tutorialResources2
+        ));
+
+        // li[2]: texto + <strong> + texto
+        resourcesList[2].textContent = '';
+        resourcesList[2].appendChild(document.createTextNode(t.tutorialResources3 + ' '));
+        const s3 = document.createElement('strong');
+        s3.textContent = t.tutorialResources3Encode;
+        resourcesList[2].appendChild(s3);
+        resourcesList[2].appendChild(document.createTextNode(' ' + t.tutorialResources3Text));
+
+        // li[3]: texto + <strong> + texto
+        resourcesList[3].textContent = '';
+        resourcesList[3].appendChild(document.createTextNode(t.tutorialResources4 + ' '));
+        const s4 = document.createElement('strong');
+        s4.textContent = t.tutorialResources4Decode;
+        resourcesList[3].appendChild(s4);
+        resourcesList[3].appendChild(document.createTextNode(' ' + t.tutorialResources4Text));
     }
 }
 
@@ -614,14 +676,18 @@ function updateAboutSection(t) {
 // Função para atualizar footer
 function updateFooter(t) {
     const footerWarning = document.querySelector('.footer p:first-child');
-    if (footerWarning) footerWarning.textContent = `⚠️ ${t.footerWarning}`;
-    
+    if (footerWarning) footerWarning.textContent = '⚠️ ' + t.footerWarning;
+
     const footerCopyright = document.querySelector('.footer .copyright');
     if (footerCopyright) footerCopyright.textContent = t.footerCopyright;
-    
+
     const footerCredits = document.querySelector('.footer .credits');
     if (footerCredits) {
-        footerCredits.innerHTML = `${t.footerCredits} <a href="https://stackbit.me/" target="_blank" rel="noopener noreferrer">${t.footerCreditsLink}</a> | ${t.footerCreditsText} <a href="https://stackbit.me/" target="_blank" rel="noopener noreferrer">${t.footerCreditsLink2}</a>`;
+        footerCredits.textContent = '';
+        footerCredits.appendChild(document.createTextNode(t.footerCredits + ' '));
+        footerCredits.appendChild(createSafeLink('https://stackbit.me/', t.footerCreditsLink));
+        footerCredits.appendChild(document.createTextNode(' | ' + t.footerCreditsText + ' '));
+        footerCredits.appendChild(createSafeLink('https://stackbit.me/', t.footerCreditsLink2));
     }
 }
 
