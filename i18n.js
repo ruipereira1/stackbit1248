@@ -13,8 +13,9 @@ const translations = {
         decode: 'Decode',
         recovery: 'Recovery',
         tutorial: 'Tutorial',
-        
-        // Encode Section
+    about: 'Sobre',
+    
+    // Encode Section
         encodeTitle: 'Encode: Palavra → Código 1248',
         encodeDescription: 'Digite uma palavra BIP39 para ver seu código',
         encodeLabel: 'Palavra BIP39',
@@ -27,6 +28,7 @@ const translations = {
         decodeTitle: 'Decode: Código 1248 → Palavra',
         decodeDescription: 'Digite o código de 4 dígitos para revelar a palavra',
         decodeLabel: 'Código 1248 (0001-2048)',
+        decodeIndex: 'Índice:',
         decodeError: 'Código inválido. Use valores entre 0001 e 2048.',
         
         // Recovery Section
@@ -169,8 +171,9 @@ const translations = {
         decode: 'Decode',
         recovery: 'Recovery',
         tutorial: 'Tutorial',
-        
-        // Encode Section
+    about: 'About',
+    
+    // Encode Section
         encodeTitle: 'Encode: Word → 1248 Code',
         encodeDescription: 'Type a BIP39 word to see its code',
         encodeLabel: 'BIP39 Word',
@@ -183,6 +186,7 @@ const translations = {
         decodeTitle: 'Decode: 1248 Code → Word',
         decodeDescription: 'Type the 4-digit code to reveal the word',
         decodeLabel: '1248 Code (0001-2048)',
+        decodeIndex: 'Index:',
         decodeError: 'Invalid code. Use values between 0001 and 2048.',
         
         // Recovery Section
@@ -401,6 +405,7 @@ function updatePageLanguage(lang) {
     });
     
     // Atualizar seções Recovery, Tutorial e About (conteúdo complexo)
+    updateTutorialHeader(t);
     updateRecoverySection(t);
     updateTutorialSection(t);
     updateAboutSection(t);
@@ -446,6 +451,26 @@ function updatePdfButton(btn, text) {
     } else {
         btn.textContent = text;
     }
+}
+
+function updateTutorialHeader(t) {
+  const headerDesc = document.querySelector('#tutorial .section-header p');
+  if (!headerDesc) return;
+  headerDesc.textContent = '';
+  headerDesc.appendChild(document.createTextNode(t.tutorialDescription + ' '));
+  headerDesc.appendChild(createSafeLink(
+    'https://stackbit.me/tutorial-stackbit-1248/',
+    t.tutorialOfficial
+  ));
+
+  const offlineNote = document.querySelector('#tutorial .offline-note');
+  if (offlineNote) {
+    offlineNote.textContent = '';
+    const noteStrong = document.createElement('strong');
+    noteStrong.textContent = 'ℹ️ ' + t.tutorialOfflineNote;
+    offlineNote.appendChild(noteStrong);
+    offlineNote.appendChild(document.createTextNode(' ' + t.tutorialOfflineText));
+  }
 }
 
 // Função para atualizar seção Recovery
@@ -507,6 +532,26 @@ function updateRecoverySection(t) {
     }
 }
 
+function updateTutorialHeader(t) {
+    const headerDesc = document.querySelector('#tutorial .section-header p');
+    if (!headerDesc) return;
+    headerDesc.textContent = '';
+    headerDesc.appendChild(document.createTextNode(t.tutorialDescription + ' '));
+    headerDesc.appendChild(createSafeLink(
+        'https://stackbit.me/tutorial-stackbit-1248/',
+        t.tutorialOfficial
+    ));
+
+    const offlineNote = document.querySelector('#tutorial .offline-note');
+    if (offlineNote) {
+        offlineNote.textContent = '';
+        const noteStrong = document.createElement('strong');
+        noteStrong.textContent = 'ℹ️ ' + t.tutorialOfflineNote;
+        offlineNote.appendChild(noteStrong);
+        offlineNote.appendChild(document.createTextNode(' ' + t.tutorialOfflineText));
+    }
+}
+
 // Função para atualizar seção Tutorial
 function updateTutorialSection(t) {
     const tutorialSecurity = document.querySelector('#tutorial .tutorial-warning strong');
@@ -548,9 +593,72 @@ function updateTutorialSection(t) {
         const step2Warning = steps[1].querySelector('.tutorial-note');
         if (step2Warning) setStrongText(step2Warning, '⚠️ ' + t.tutorialStep2Warning, t.tutorialStep2WarningText);
         
-        // Passo 3 - conteúdo complexo, atualizar partes principais
+        // Passo 3
         if (steps[2].querySelector('h3')) {
             steps[2].querySelector('h3').textContent = t.tutorialStep3;
+        }
+        const step3Intro = steps[2].querySelector('p');
+        if (step3Intro) step3Intro.textContent = t.tutorialStep3Text1;
+
+        const step3List = steps[2].querySelectorAll('.tutorial-list li');
+        if (step3List.length >= 4) {
+            step3List[0].textContent = '';
+            setStrongText(step3List[0], t.tutorialStep3Quadro1, t.tutorialStep3Quadro1Text);
+            step3List[1].textContent = '';
+            setStrongText(step3List[1], t.tutorialStep3Quadro2, t.tutorialStep3Quadro2Text);
+            step3List[2].textContent = '';
+            setStrongText(step3List[2], t.tutorialStep3Quadro3, t.tutorialStep3Quadro3Text);
+            step3List[3].textContent = '';
+            setStrongText(step3List[3], t.tutorialStep3Quadro4, t.tutorialStep3Quadro4Text);
+        }
+
+        const step3Paragraphs = steps[2].querySelectorAll('p');
+        if (step3Paragraphs.length >= 2) {
+            step3Paragraphs[1].textContent = t.tutorialStep3Text2;
+        }
+        const step3How = steps[2].querySelector('.tutorial-explanation');
+        if (step3How) setStrongText(step3How, t.tutorialStep3How, t.tutorialStep3HowText);
+
+        const step3Examples = steps[2].querySelectorAll('.tutorial-example');
+        if (step3Examples.length >= 2) {
+            const ex1Title = step3Examples[0].querySelector('h4');
+            if (ex1Title) ex1Title.textContent = t.tutorialStep3Example1;
+            const ex1Items = step3Examples[0].querySelectorAll('li');
+            if (ex1Items.length >= 4) {
+                ex1Items[0].textContent = t.tutorialStep3Example1Quadro1;
+                ex1Items[1].textContent = t.tutorialStep3Example1Quadro2;
+                ex1Items[2].textContent = t.tutorialStep3Example1Quadro3;
+                ex1Items[3].textContent = t.tutorialStep3Example1Quadro4;
+            }
+
+            const ex2Title = step3Examples[1].querySelector('h4');
+            if (ex2Title) ex2Title.textContent = t.tutorialStep3Example2;
+            const ex2Word1 = step3Examples[1].querySelector('p strong');
+            if (ex2Word1) ex2Word1.textContent = t.tutorialStep3Example2Word1;
+            const ex2Lists = step3Examples[1].querySelectorAll('ul');
+            if (ex2Lists.length >= 2) {
+                const w1Items = ex2Lists[0].querySelectorAll('li');
+                if (w1Items.length >= 4) {
+                    w1Items[0].textContent = t.tutorialStep3Example2Word1Quadro1;
+                    w1Items[1].textContent = t.tutorialStep3Example2Word1Quadro2;
+                    w1Items[2].textContent = t.tutorialStep3Example2Word1Quadro3;
+                    w1Items[3].textContent = t.tutorialStep3Example2Word1Quadro4;
+                }
+                const w2Label = ex2Lists[1].previousElementSibling;
+                if (w2Label && w2Label.tagName === 'P') {
+                    w2Label.textContent = '';
+                    const strong = document.createElement('strong');
+                    strong.textContent = t.tutorialStep3Example2Word2;
+                    w2Label.appendChild(strong);
+                }
+                const w2Items = ex2Lists[1].querySelectorAll('li');
+                if (w2Items.length >= 4) {
+                    w2Items[0].textContent = t.tutorialStep3Example2Word2Quadro1;
+                    w2Items[1].textContent = t.tutorialStep3Example2Word2Quadro2;
+                    w2Items[2].textContent = t.tutorialStep3Example2Word2Quadro3;
+                    w2Items[3].textContent = t.tutorialStep3Example2Word2Quadro4;
+                }
+            }
         }
         
         // Passo 4
@@ -612,7 +720,7 @@ function updateAboutSection(t) {
     const aboutTitle = document.querySelector('#about .section-header h2');
     if (aboutTitle) aboutTitle.textContent = t.aboutTitle;
     
-    const aboutDesc = document.querySelector('#about .section-header p:first-child');
+    const aboutDesc = document.querySelector('#about .section-header p');
     if (aboutDesc) aboutDesc.textContent = t.aboutDescription;
     
     const specsTitle = document.querySelector('#about .specs-card h3');
