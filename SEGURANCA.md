@@ -25,37 +25,52 @@ Meta tag em `index.html`:
 
 ```
 default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self';
-img-src 'self'; object-src 'none'; connect-src 'none'; base-uri 'self'; form-action 'none';
+img-src 'self'; object-src 'none'; connect-src 'self'; worker-src 'self';
+manifest-src 'self'; frame-src 'none'; media-src 'none'; base-uri 'self'; form-action 'none';
 ```
 
 - Sem `unsafe-inline` nem `unsafe-eval`
-- Sem ligações de rede da app (`connect-src 'none'`)
+- `connect-src 'self'` — apenas pedidos same-origin (verificação do Service Worker); **sem** ligações a domínios externos
 - Sem plugins/embeds (`object-src 'none'`)
+- Sem iframes (`frame-src 'none'`)
+- Service Workers restritos a `'self'` (`worker-src 'self'`)
 
 **Nota:** `frame-ancestors` só funciona em headers HTTP (GitHub Pages), não em meta tags.
 
 ### 3. Subresource Integrity (SRI)
 
-Scripts externos ao inline têm hash `sha384` em `index.html`:
+Recursos com hash `sha384` em `index.html`:
 
+- `styles.css`
+- `structured-data.json` (JSON-LD externo — CSP sem inline)
 - `bip39-words.js`
 - `i18n.js`
 - `security.js`
 - `app.js`
 
-Se um ficheiro for alterado no servidor sem atualizar o hash, o browser **recusa carregar** o script.
+Se um ficheiro for alterado no servidor sem atualizar o hash, o browser **recusa carregar** o recurso.
 
-Regenerar e **atualizar index.html automaticamente** após alterar JS:
+Regenerar e **atualizar index.html + security.js automaticamente** após alterar JS/CSS/JSON:
 
 ```bash
 node scripts/generate-sri.js
 ```
 
-### 4. DOM Clobbering (parcial)
+(Se `security.js` mudar, executar o script **duas vezes** — a 2.ª corrige o SRI de `security.js`.)
+
+### 4. Service Worker — verificação de integridade
+
+Antes de registar o Service Worker, `security.js`:
+
+1. Faz `fetch` de `service-worker.js` com `cache: 'no-store'`
+2. Calcula SHA-384 e compara com `EXPECTED_SW_SHA384` (gerado por `generate-sri.js`)
+3. **Cancela o registo** se o hash não coincidir
+
+### 5. DOM Clobbering (parcial)
 
 `security.js` valida IDs em `document.getElementById` — apenas `[a-zA-Z0-9_-]`, máx. 100 caracteres.
 
-### 5. Dicionário BIP39
+### 6. Dicionário BIP39
 
 - `Object.freeze(bip39Words)` após carregamento (proteção superficial contra reassignment)
 - Validação de integridade: array com **exactamente 2048** entradas
@@ -63,12 +78,12 @@ node scripts/generate-sri.js
 
 **Não implementado** (removido por quebrar a app): freeze de protótipos nativos, Proxy no array.
 
-### 6. Logging
+### 7. Logging
 
 - `secureConsole` sanitiza logs (`sanitizeForLog`)
 - Sem stack traces expostos ao utilizador
 
-### 7. Headers / meta de segurança
+### 8. Headers / meta de segurança
 
 | Meta | Função |
 |------|--------|
@@ -77,25 +92,30 @@ node scripts/generate-sri.js
 | `Permissions-Policy` | Desativa câmara, microfone, geolocalização, etc. |
 | `robots: noindex, nofollow` | Discourage indexação (ferramenta de backup) |
 
-### 8. Inputs
+### 9. Inputs
 
 | Campo | Proteção |
 |-------|----------|
-| Encode | `autocomplete="off"`, `spellcheck="false"`, regex `[a-z]` |
+| Encode | `autocomplete="off"`, `maxlength="8"`, `spellcheck="false"`, regex `[a-z]` |
 | Decode | `autocomplete="off"`, `inputmode="numeric"`, `spellcheck="false"` |
 
-### 9. Armazenamento
+### 10. Limpeza de dados sensíveis
+
+- Ao **sair** dos separadores Encode/Decode, inputs e resultados são limpos
+- Quando a página fica **oculta** (mudar de app/aba), Encode e Decode são limpos
+
+### 11. Armazenamento
 
 - **Não** persiste palavras BIP39, códigos nem seeds
 - `localStorage` apenas para idioma (`pt-BR` ou `en`) — whitelist estrita
 
-### 10. Service Worker (PWA)
+### 12. Service Worker (PWA)
 
-- Cache versionado (`stackbit-1248-v3`)
+- Cache versionado (`stackbit-1248-v4`)
 - Apenas ficheiros same-origin
 - Atualização automática de caches antigos no `activate`
 
-### 11. Ligações externas
+### 13. Ligações externas
 
 Links no tutorial/recovery usam `rel="noopener noreferrer"`. Só abrem se o utilizador clicar.
 
@@ -116,10 +136,12 @@ Links no tutorial/recovery usam `rel="noopener noreferrer"`. Só abrem se o util
 
 ## Checklist
 
-- [x] CSP restritiva
-- [x] SRI nos scripts
+- [x] CSP restritiva (incl. `worker-src`, `frame-src 'none'`)
+- [x] SRI nos scripts, CSS e JSON-LD
+- [x] Verificação de integridade do Service Worker
 - [x] Anti-XSS nos inputs e DOM
-- [x] Sem `connect-src` (zero rede em runtime)
+- [x] `connect-src 'self'` (sem domínios externos)
+- [x] Limpeza automática de inputs sensíveis
 - [x] Sem persistência de seed
 - [x] Autocomplete desativado
 - [x] `noindex` para motores de busca

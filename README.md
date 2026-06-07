@@ -31,12 +31,21 @@ Aplicação web open source para codificação e decodificação de palavras BIP
 
 Medidas implementadas (detalhes em [SEGURANCA.md](SEGURANCA.md)):
 
-- ✅ CSP restritiva (sem `unsafe-inline` / `unsafe-eval`, `connect-src 'none'`)
-- ✅ SRI (Subresource Integrity) em todos os scripts
+- ✅ CSP restritiva (sem inline, `frame-src 'none'`, `worker-src 'self'`)
+- ✅ SRI em scripts, CSS e JSON-LD
+- ✅ Verificação SHA-384 do Service Worker antes do registo
 - ✅ Proteção XSS — validação de inputs e DOM seguro
+- ✅ Limpeza automática ao mudar de separador ou ocultar a página
 - ✅ Sem armazenamento de seed (apenas preferência de idioma)
 - ✅ Funciona 100% offline após cache PWA
-- ✅ `autocomplete="off"` nos campos Encode e Decode
+- ✅ `autocomplete="off"` e `maxlength="8"` no Encode
+
+### Verificar antes de usar com dados reais
+
+1. Clone o repositório: `git clone https://github.com/ruipereira1/stackbit1248.git`
+2. Compare commits com o GitHub (ou use uma release/tag de confiança)
+3. Abra `index.html` **offline** ou instale a PWA **sem rede** após a 1.ª visita verificada
+4. Após editar ficheiros `.js`/`.css`, execute `node scripts/generate-sri.js` (duas vezes se alterou `security.js`)
 
 ## ⚠️ Aviso importante
 

@@ -104,18 +104,6 @@ function clearElement(el) {
   }
 }
 
-if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(function () {
-        secureConsole.log('Service Worker registrado');
-      })
-      .catch(function () {
-        secureConsole.warn('Service Worker: não disponível (normal em file://)');
-      });
-  });
-}
-
 document.addEventListener('DOMContentLoaded', function () {
   if (typeof bip39Words === 'undefined' || !Array.isArray(bip39Words)) {
     showFatalError('invalid');
@@ -155,10 +143,63 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
+  const decodeInputs = [
+    document.getElementById('decode-d1'),
+    document.getElementById('decode-d2'),
+    document.getElementById('decode-d3'),
+    document.getElementById('decode-d4')
+  ];
+
+  function clearEncodeState() {
+    encodeInput.value = '';
+    encodeSuggestions.classList.remove('show');
+    clearElement(encodeSuggestions);
+    const resultCard = document.getElementById('encode-result');
+    if (resultCard) resultCard.classList.add('hidden');
+    const wordEl = document.getElementById('encode-word');
+    const indexEl = document.getElementById('encode-index');
+    const codeEl = document.getElementById('encode-code');
+    const quadros = document.getElementById('encode-quadros');
+    if (wordEl) wordEl.textContent = '';
+    if (indexEl) indexEl.textContent = '';
+    if (codeEl) codeEl.textContent = '';
+    if (quadros) clearElement(quadros);
+  }
+
+  function clearDecodeState() {
+    decodeInputs.forEach(function (input) {
+      if (input) input.value = '';
+    });
+    const resultCard = document.getElementById('decode-result');
+    const errorCard = document.getElementById('decode-error');
+    if (resultCard) resultCard.classList.add('hidden');
+    if (errorCard) errorCard.classList.add('hidden');
+    const wordEl = document.getElementById('decode-word');
+    const indexEl = document.getElementById('decode-index');
+    const container = document.getElementById('decode-quadros');
+    if (wordEl) wordEl.textContent = '';
+    if (indexEl) indexEl.textContent = '';
+    if (container) clearElement(container);
+  }
+
+  function clearSensitiveState() {
+    clearEncodeState();
+    clearDecodeState();
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') {
+      clearSensitiveState();
+    }
+  });
+
   tabs.forEach(function (tab) {
     if (!tab) return;
     tab.addEventListener('click', function () {
       try {
+        const previousTab = document.querySelector('.tab.active');
+        const previousId = previousTab ? previousTab.getAttribute('data-tab') : null;
+
         tabs.forEach(function (t) {
           if (t) t.classList.remove('active');
         });
@@ -168,6 +209,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!targetId || (targetId !== 'encode' && targetId !== 'decode' && targetId !== 'recovery' && targetId !== 'tutorial' && targetId !== 'about')) {
           secureConsole.error('Erro: Tab inválido');
           return;
+        }
+
+        if (previousId === 'encode' && targetId !== 'encode') {
+          clearEncodeState();
+        }
+        if (previousId === 'decode' && targetId !== 'decode') {
+          clearDecodeState();
         }
 
         sections.forEach(function (s) {
@@ -482,13 +530,6 @@ document.addEventListener('DOMContentLoaded', function () {
       return errorDiv;
     }
   }
-
-  const decodeInputs = [
-    document.getElementById('decode-d1'),
-    document.getElementById('decode-d2'),
-    document.getElementById('decode-d3'),
-    document.getElementById('decode-d4')
-  ];
 
   function sanitizeDecodeDigit(value, idx) {
     const pattern = idx === 0 ? /[^0-2]/g : /[^0-9]/g;

@@ -1,0 +1,27 @@
+{
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Stackbit 1248 - Ferramenta BIP39",
+    "description": "Ferramenta offline para codificação e recuperação de seed phrases BIP39 usando o sistema Stackbit 1248",
+    "url": "https://ruipereira1.github.io/stackbit1248/",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+    },
+    "featureList": [
+        "Codificação BIP39 para sistema Stackbit 1248",
+        "Decodificação de códigos Stackbit 1248",
+        "Funcionamento 100% offline",
+        "PWA (Progressive Web App)",
+        "Suporte multilíngue (PT-BR, EN)"
+    ],
+    "creator": {
+        "@type": "Organization",
+        "name": "Stackbit 1248 Tool",
+        "url": "https://github.com/ruipereira1/stackbit1248"
+    },
+    "license": "https://opensource.org/licenses/MIT"
+}

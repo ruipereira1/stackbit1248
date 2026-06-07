@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; object-src 'none'; connect-src 'none'; base-uri 'self'; form-action 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; object-src 'none'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'none'; media-src 'none'; base-uri 'self'; form-action 'none';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="no-referrer">
     <!-- NOTA: X-Frame-Options e frame-ancestors só funcionam em headers HTTP, não em meta tags -->
@@ -33,7 +33,7 @@
     <meta name="twitter:description" content="Ferramenta offline para codificação e recuperação de seed phrases BIP39 usando o sistema Stackbit 1248">
     
     
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" integrity="sha384-PLACEHOLDER" crossorigin="anonymous">
     <!-- Manifest será carregado via JavaScript apenas se não estiver em file:// -->
     <meta name="theme-color" content="#ff6b35">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -97,7 +97,7 @@
                 <div class="input-group">
                     <label for="encode-input" data-i18n="encodeLabel">Palavra BIP39</label>
                     <input type="text" id="encode-input" data-i18n="encodePlaceholder" placeholder="Ex: abandon, zoo, lounge..." autocomplete="off"
-                        spellcheck="false">
+                        spellcheck="false" maxlength="8" autocapitalize="off" autocorrect="off">
                     <div id="encode-suggestions" class="suggestions"></div>
                 </div>
 
@@ -392,41 +392,12 @@
         </footer>
     </div>
 
-    <!-- Structured Data (JSON-LD) para SEO -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Stackbit 1248 - Ferramenta BIP39",
-        "description": "Ferramenta offline para codificação e recuperação de seed phrases BIP39 usando o sistema Stackbit 1248",
-        "url": "https://ruipereira1.github.io/stackbit1248/",
-        "applicationCategory": "FinanceApplication",
-        "operatingSystem": "Web Browser",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "featureList": [
-            "Codificação BIP39 para sistema Stackbit 1248",
-            "Decodificação de códigos Stackbit 1248",
-            "Funcionamento 100% offline",
-            "PWA (Progressive Web App)",
-            "Suporte multilíngue (PT-BR, EN)"
-        ],
-        "creator": {
-            "@type": "Organization",
-            "name": "Stackbit 1248 Tool",
-            "url": "https://github.com/ruipereira1/stackbit1248"
-        },
-        "license": "https://opensource.org/licenses/MIT"
-    }
-    </script>
+    <script type="application/ld+json" src="structured-data.json" integrity="sha384-CHb0CvvhXVzdp2XluHid0+6m8ILKa+xEXuISD9W7Ct1gInVfBwHvhbWknSUhcGP8" crossorigin="anonymous"></script>
 
     <script src="bip39-words.js" integrity="sha384-llySfv74bapownYNyBR6obKHIxdXma1TruSqOfYCqksZrJnrEiac45X6X2jsS95I" crossorigin="anonymous"></script>
     <script src="i18n.js" integrity="sha384-UJ7nnBh91u4tSVyCvk65X2WozhgWi50MD1mNcJkK1djfGoL4doVzHc3zKDpxKXKz" crossorigin="anonymous"></script>
-    <script src="security.js" integrity="sha384-XXoZLvYUCt+rKQ149q317LNgWKmCooDA4y+Hk1Lul6xN/o4xJ1I1NFkfOekDaRIo" crossorigin="anonymous"></script>
-    <script src="app.js" integrity="sha384-VjlVFkl8eh67C7nwfoUXEEefJPOTFbw1eM86hmQhy0UWFjURy8vOX0VoZspxhCMo" crossorigin="anonymous"></script>
+    <script src="security.js" integrity="sha384-3qn3gAAaQliQ5XPxI+4hXPfr/Pw/wNBWRzSQfH1I6P8jq9W6rRmiHOBWS2nnMrnx" crossorigin="anonymous"></script>
+    <script src="app.js" integrity="sha384-z3gjteOj8R1MRV+321mFtcL2B4w7o9/mbiTxJvJZaibEKihdwOSaxsTy73jE/QSt" crossorigin="anonymous"></script>
 </body>
 
 </html>
