@@ -7,7 +7,7 @@
     'use strict';
 
     // Hash esperado de service-worker.js (gerado por scripts/generate-sri.js)
-    const EXPECTED_SW_SHA384 = 'sha384-TirBVt3C0ebw8KlldnRIYv0KNpUguGSQF5HqJM4h4XKE5W+9fQwQWjWCorLOc9FC';
+    const EXPECTED_SW_SHA384 = 'sha384-jFNNARxArX/JSXQTT8mNJusMdClQ72Ybig3o4qXBm+Ke8SjGAEnfJTQ/U+YtnDIL';
 
     // ── 1. DOM Clobbering protection ────────────────────────────────────────
     const _getElementById = document.getElementById.bind(document);

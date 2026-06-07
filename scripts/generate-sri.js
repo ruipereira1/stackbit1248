@@ -8,6 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { execSync } = require('child_process');
 
 const root = path.join(__dirname, '..');
 const indexPath = path.join(root, 'index.html');
@@ -28,8 +29,32 @@ const stylesheet = 'styles.css';
 /** SW hash stored in security.js (registered via JS, no native SRI) */
 const serviceWorkerFile = 'service-worker.js';
 
+function readGitIndexBlob(file) {
+  try {
+    return execSync('git show :' + file.replace(/\\/g, '/'), {
+      cwd: root,
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'ignore']
+    });
+  } catch (_err) {
+    return null;
+  }
+}
+
 function hashFile(file) {
-  const buf = fs.readFileSync(path.join(root, file));
+  const disk = fs.readFileSync(path.join(root, file));
+  let buf = disk;
+  const staged = readGitIndexBlob(file);
+  if (staged && staged.length) {
+    if (Buffer.compare(disk, staged) === 0) {
+      buf = staged;
+    } else {
+      const diskLf = Buffer.from(disk.toString('utf8').replace(/\r\n/g, '\n'), 'utf8');
+      if (Buffer.compare(diskLf, staged) === 0) {
+        buf = staged;
+      }
+    }
+  }
   return 'sha384-' + crypto.createHash('sha384').update(buf).digest('base64');
 }
 
