@@ -1,7 +1,7 @@
 {
-  "name": "Stackbit 1248 - Ferramenta BIP39",
+  "name": "Stackbit 1248 - BIP39 Tool",
   "short_name": "Stackbit 1248",
-  "description": "Ferramenta offline para codificação e recuperação de seed phrases BIP39 usando o sistema Stackbit 1248",
+  "description": "Offline tool for encoding and recovering BIP39 seed phrases using the Stackbit 1248 system",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#1a1a1a",
@@ -9,7 +9,7 @@
   "orientation": "portrait-primary",
   "icons": [],
   "categories": ["finance", "utilities"],
-  "lang": "pt-BR",
+  "lang": "en",
   "dir": "ltr",
   "scope": "./",
   "prefer_related_applications": false

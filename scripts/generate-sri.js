@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * Gera hashes SRI (sha384) e atualiza index.html e security.js automaticamente.
- * Executar após alterar ficheiros listados abaixo.
+ * Generate SRI (sha384) hashes and auto-update index.html and security.js.
+ * Run after changing any file listed below.
  *
- * Uso: node scripts/generate-sri.js
+ * Usage: node scripts/generate-sri.js
  */
 const fs = require('fs');
 const path = require('path');
@@ -13,16 +13,16 @@ const root = path.join(__dirname, '..');
 const indexPath = path.join(root, 'index.html');
 const securityPath = path.join(root, 'security.js');
 
-/** Scripts com SRI em index.html */
+/** Scripts with SRI in index.html */
 const indexScripts = ['bip39-words.js', 'i18n.js', 'security.js', 'app.js'];
 
-/** JSON-LD externo (CSP sem inline) */
+/** External JSON-LD (CSP without inline) */
 const jsonLdScript = 'structured-data.json';
 
-/** Stylesheet com SRI */
+/** Stylesheet with SRI */
 const stylesheet = 'styles.css';
 
-/** SW: hash em security.js (registo via JS, sem SRI nativo) */
+/** SW hash stored in security.js (registered via JS, no native SRI) */
 const serviceWorkerFile = 'service-worker.js';
 
 function hashFile(file) {
@@ -63,7 +63,7 @@ function stylesheetIntegrityPattern(file) {
 
 function replaceIntegrity(html, pattern, file, hash, label) {
   if (!pattern.test(html)) {
-    console.warn('AVISO: tag de ' + file + ' (' + label + ') não encontrada em index.html');
+    console.warn('WARNING: ' + file + ' tag (' + label + ') not found in index.html');
     return { html: html, changed: 0 };
   }
   const next = html.replace(pattern, function (_match, prefix, suffix) {
@@ -112,7 +112,7 @@ function updateSecurityJsSwHash(hash) {
   let src = fs.readFileSync(securityPath, 'utf8');
   const pattern = /(const EXPECTED_SW_SHA384 = ')(sha384-[^']+)(';)/;
   if (!pattern.test(src)) {
-    console.warn('AVISO: EXPECTED_SW_SHA384 não encontrado em security.js');
+    console.warn('WARNING: EXPECTED_SW_SHA384 not found in security.js');
     return 0;
   }
   const next = src.replace(pattern, function (_match, prefix, _old, suffix) {
@@ -133,7 +133,7 @@ const allFiles = [
 ];
 const hashes = {};
 
-console.log('Hashes SRI (sha384):\n');
+console.log('SRI hashes (sha384):\n');
 allFiles.forEach(function (file) {
   hashes[file] = hashFile(file);
   console.log('  ' + file);
@@ -144,17 +144,17 @@ const indexUpdated = updateIndexHtml(hashes);
 const securityUpdated = updateSecurityJsSwHash(hashes[serviceWorkerFile]);
 
 if (indexUpdated > 0) {
-  console.log('index.html atualizado (' + indexUpdated + ' recurso(s)).');
+  console.log('index.html updated (' + indexUpdated + ' resource(s)).');
 } else {
-  console.log('index.html já estava sincronizado.');
+  console.log('index.html already in sync.');
 }
 
 if (securityUpdated > 0) {
-  console.log('security.js atualizado (hash do Service Worker).');
+  console.log('security.js updated (Service Worker hash).');
 } else {
-  console.log('security.js já estava sincronizado (Service Worker).');
+  console.log('security.js already in sync (Service Worker).');
 }
 
 if (indexUpdated > 0 || securityUpdated > 0) {
-  console.log('\nRe-executar este script se alterou security.js (SRI de security.js muda).');
+  console.log('\nRe-run this script if you changed security.js (its SRI hash will change).');
 }

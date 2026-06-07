@@ -1,3 +1,3 @@
-# Ferramenta de backup BIP39 — não indexar
+# BIP39 backup tool — do not index
 User-agent: *
 Disallow: /

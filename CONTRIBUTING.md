@@ -1,117 +1,119 @@
-# 🤝 Guia de Contribuição
+# Contributing Guide
 
-Obrigado por considerar contribuir para o Stackbit 1248! Este documento fornece diretrizes para contribuir com o projeto.
+Thank you for considering a contribution to Stackbit 1248! This document provides guidelines for contributing to the project.
 
-## 📋 Como Contribuir
+## How to contribute
 
-### 1. Reportar Bugs
+### 1. Report bugs
 
-Se encontrar um bug, por favor:
+If you find a bug:
 
-1. Verifique se o bug já não foi reportado nas [Issues](https://github.com/ruipereira1/stackbit1248/issues)
-2. Crie uma nova issue com:
-   - Descrição clara do problema
-   - Passos para reproduzir
-   - Comportamento esperado vs comportamento atual
-   - Screenshots (se aplicável)
-   - Navegador e versão
+1. Check whether it was already reported in [Issues](https://github.com/ruipereira1/stackbit1248/issues)
+2. Open a new issue with:
+   - Clear description of the problem
+   - Steps to reproduce
+   - Expected vs actual behavior
+   - Screenshots (if applicable)
+   - Browser and version
 
-### 2. Sugerir Melhorias
+### 2. Suggest improvements
 
-Sugestões são bem-vindas! Por favor:
+Suggestions are welcome:
 
-1. Verifique se a sugestão já não existe nas [Issues](https://github.com/ruipereira1/stackbit1248/issues)
-2. Crie uma issue com:
-   - Descrição clara da funcionalidade
-   - Motivação/justificativa
-   - Exemplos de uso (se aplicável)
+1. Check whether the suggestion already exists in [Issues](https://github.com/ruipereira1/stackbit1248/issues)
+2. Open an issue with:
+   - Clear description of the feature
+   - Motivation / rationale
+   - Usage examples (if applicable)
 
-### 3. Contribuir com Código
+### 3. Contribute code
 
-#### Processo:
+#### Process
 
-1. **Fork o repositório**
+1. **Fork the repository**
    ```bash
    git clone https://github.com/ruipereira1/stackbit1248.git
    cd stackbit1248
    ```
 
-2. **Crie uma branch para sua feature**
+2. **Create a feature branch**
    ```bash
-   git checkout -b feature/nome-da-feature
+   git checkout -b feature/your-feature-name
    ```
 
-3. **Faça suas alterações**
-   - Siga o estilo de código existente
-   - Adicione comentários quando necessário
-   - Teste suas alterações
+3. **Make your changes**
+   - Follow the existing code style
+   - Add comments when needed
+   - Test your changes
 
-4. **Commit suas mudanças**
+4. **Commit**
    ```bash
    git add .
-   git commit -m "Descrição clara do que foi feito"
+   git commit -m "Clear description of what changed"
    ```
 
-5. **Push para sua branch**
+5. **Push to your branch**
    ```bash
-   git push origin feature/nome-da-feature
+   git push origin feature/your-feature-name
    ```
 
-6. **Abra um Pull Request**
-   - Descreva claramente o que foi feito
-   - Referencie issues relacionadas (se houver)
-   - Aguarde revisão
+6. **Open a Pull Request**
+   - Describe what you changed
+   - Reference related issues (if any)
+   - Wait for review
 
-## 📝 Padrões de Código
+## Code standards
 
 ### JavaScript
 
 - Use `'use strict';`
-- Use `const` e `let`, evite `var`
-- Use nomes descritivos para variáveis e funções
-- Comente código complexo
-- Mantenha funções pequenas e focadas
+- Use `const` and `let`; avoid `var`
+- Use descriptive names for variables and functions
+- Comment complex logic
+- Keep functions small and focused
 
-### HTML/CSS
+### HTML / CSS
 
-- Use indentação consistente (2 ou 4 espaços)
-- Use nomes semânticos para classes
-- Mantenha HTML acessível
+- Use consistent indentation (2 or 4 spaces)
+- Use semantic class names
+- Keep HTML accessible
 
-### Segurança
+### Security
 
-- **NUNCA** comprometa a segurança
-- Valide todos os inputs
-- Use `textContent` em vez de `innerHTML` quando possível
-- Siga as práticas de segurança já implementadas
+- **Never** compromise security
+- Validate all inputs
+- Prefer `textContent` over `innerHTML`
+- Follow existing security practices
+- After changing `.js` / `.css` files, run `node scripts/generate-sri.js` (twice if you changed `security.js`)
 
-## ✅ Checklist antes de enviar PR
+## PR checklist
 
-- [ ] Código funciona corretamente
-- [ ] Não introduz vulnerabilidades de segurança
-- [ ] Segue o estilo de código do projeto
-- [ ] Comentários adicionados quando necessário
-- [ ] README atualizado (se necessário)
-- [ ] Testado em diferentes navegadores (se aplicável)
+- [ ] Code works as intended
+- [ ] No new security vulnerabilities
+- [ ] Matches project code style
+- [ ] Comments added where needed
+- [ ] README updated (if needed)
+- [ ] SRI hashes updated via `generate-sri.js` (if JS/CSS changed)
+- [ ] Tested in multiple browsers (if applicable)
 
-## 🚫 O que NÃO fazer
+## Please do not
 
-- ❌ Não adicionar dependências externas sem discussão prévia
-- ❌ Não modificar o dicionário BIP39 (deve permanecer 100% conforme o padrão oficial)
-- ❌ Não remover funcionalidades de segurança
-- ❌ Não adicionar rastreamento ou analytics
-- ❌ Não adicionar código que requer servidor (deve funcionar 100% offline)
+- ❌ Add external dependencies without prior discussion
+- ❌ Modify the BIP39 dictionary (must stay 100% aligned with the official standard)
+- ❌ Remove security features
+- ❌ Add tracking or analytics
+- ❌ Add code that requires a server (must work 100% offline)
 
-## 📚 Recursos
+## Resources
 
 - [BIP39 Specification](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
 - [MDN Web Docs](https://developer.mozilla.org/)
-- [Web Security Best Practices](https://owasp.org/www-project-top-ten/)
+- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)
 
-## ❓ Dúvidas?
+## Questions?
 
-Se tiver dúvidas, abra uma issue ou entre em contato com os mantenedores.
+Open an issue or contact the maintainers.
 
 ---
 
-**Obrigado por contribuir!** 🎉
+**Thank you for contributing!**
