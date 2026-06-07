@@ -1,190 +1,139 @@
-# 🛡️ Proteções de Segurança Anti-Hackers
+# Segurança — Stackbit 1248
 
-Este documento lista todas as proteções de segurança implementadas no Stackbit 1248 para proteger contra ataques e vulnerabilidades.
+Documentação **alinhada com o código atual** (Junho 2026). Descreve o que está realmente implementado e os limites da ferramenta.
 
-## 🔒 Proteções Implementadas
+## Modelo de ameaça
 
-### 1. Proteção contra XSS (Cross-Site Scripting)
+Esta é uma aplicação **100% client-side** para converter palavras BIP39 ↔ códigos Stackbit 1248. Não gera seeds, não assina transações e **não envia dados a servidores** em runtime.
 
-✅ **Sanitização de Inputs**
-- Função `sanitizeInput()` que usa `textContent` para escapar HTML
-- Validação rigorosa de todos os inputs do usuário
-- Uso de `textContent` em vez de `innerHTML` sempre que possível
-
-✅ **Content Security Policy (CSP)**
-- Meta tag CSP configurada no HTML
-- Bloqueia execução de scripts inline não confiáveis
-- `connect-src 'none'` - bloqueia todas as conexões de rede
-- `form-action 'none'` - bloqueia envio de formulários
-
-✅ **Validação de Strings**
-- Regex para validar formato de palavras BIP39: `/^[a-z]+$/`
-- Remoção de caracteres especiais e números
-- Limitação de tamanho de inputs
-
-### 2. Proteção contra Prototype Pollution
-
-✅ **Congelamento de Protótipos**
-```javascript
-Object.freeze(Object.prototype);
-Object.freeze(Array.prototype);
-Object.freeze(String.prototype);
-```
-- Previne modificação de protótipos nativos
-- Bloqueia ataques de prototype pollution
-
-### 3. Proteção contra DOM Clobbering
-
-✅ **Validação de IDs**
-- `getElementById` sobrescrito com validação
-- Verifica formato: apenas `[a-zA-Z0-9_-]`
-- Limita tamanho máximo (100 caracteres)
-- Rejeita IDs com caracteres perigosos
-
-### 4. Proteção do Dicionário BIP39
-
-✅ **Múltiplas Camadas de Proteção**
-- Array congelado com `Object.freeze()`
-- Cada palavra individualmente protegida
-- Proxy que bloqueia modificações
-- Propriedade `writable: false` e `configurable: false`
-- Bloqueia tentativas de modificar o dicionário
-
-### 5. Proteção contra Log Injection
-
-✅ **Sistema de Logging Seguro**
-- Função `sanitizeForLog()` remove caracteres de controle
-- Remove quebras de linha e caracteres perigosos
-- Limita tamanho de logs (200 caracteres)
-- Não expõe stack traces ou detalhes sensíveis
-- Wrapper `secureConsole` para todos os logs
-
-### 6. Validação Rigorosa de Inputs
-
-✅ **Validação de Palavras BIP39**
-- Verifica se é string válida
-- Valida formato (apenas letras minúsculas)
-- Verifica existência no dicionário oficial
-- Tratamento de erros seguro
-
-✅ **Validação de Códigos**
-- Verifica se está entre 0001 e 2048
-- Valida cada dígito individualmente
-- Rejeita valores inválidos
-
-✅ **Validação de Índices**
-- Verifica se é número inteiro
-- Verifica se está dentro do range válido
-- Proteção contra overflow
-
-### 7. Headers de Segurança HTTP
-
-✅ **Meta Tags de Segurança**
-- `X-Content-Type-Options: nosniff` - previne MIME sniffing
-- `Referrer-Policy: no-referrer` - não envia referrer
-- `Permissions-Policy` - desabilita recursos sensíveis (câmera, microfone, etc.)
-
-### 8. Proteção contra Timing Attacks
-
-✅ **Normalização de Tempo (Opcional)**
-- Código preparado para normalizar tempo de resposta
-- Pode ser habilitado para ambientes de alta segurança
-- Atualmente desabilitado para performance
-
-### 9. Sem Comunicação Externa
-
-✅ **100% Offline**
-- `connect-src 'none'` no CSP
-- Sem requisições HTTP
-- Sem analytics ou tracking
-- Sem envio de dados para servidores
-
-### 10. Sem Armazenamento de Dados
-
-✅ **Sem Persistência**
-- Não usa localStorage para dados sensíveis
-- Não usa sessionStorage
-- Não usa cookies
-- Apenas preferência de idioma (não sensível)
-
-### 11. Proteção contra Eval
-
-✅ **Eval Desabilitado (Comentado)**
-- Código preparado para desabilitar `eval()`
-- Atualmente comentado para compatibilidade
-- Pode ser habilitado se necessário
-
-### 12. Validação de Navegação
-
-✅ **Validação de Tabs**
-- Verifica se tab é válido antes de mostrar
-- Lista branca de tabs permitidos
-- Bloqueia tabs inválidos ou maliciosos
-
-### 13. Sanitização de Sugestões
-
-✅ **Sugestões Seguras**
-- Limita a 10 sugestões (performance e segurança)
-- Valida cada palavra antes de mostrar
-- Usa `textContent` em vez de `innerHTML`
-- Cria elementos DOM de forma segura
-
-### 14. Proteção de Erros
-
-✅ **Tratamento Seguro de Erros**
-- Não expõe stack traces
-- Mensagens genéricas de erro
-- Logs sanitizados
-- Não revela informações sensíveis
-
-## 🚫 O que NÃO é Permitido
-
-- ❌ Modificar o dicionário BIP39
-- ❌ Executar código arbitrário
-- ❌ Enviar dados para servidores
-- ❌ Armazenar dados sensíveis
-- ❌ Usar `innerHTML` com dados do usuário
-- ❌ Usar `eval()` ou `Function()`
-- ❌ Modificar protótipos nativos
-- ❌ Acessar recursos do sistema (câmera, microfone, etc.)
-
-## 📋 Checklist de Segurança
-
-- [x] Proteção contra XSS
-- [x] Proteção contra Prototype Pollution
-- [x] Proteção contra DOM Clobbering
-- [x] Validação rigorosa de inputs
-- [x] Content Security Policy
-- [x] Headers de segurança HTTP
-- [x] Logging seguro
-- [x] Sem comunicação externa
-- [x] Sem armazenamento de dados sensíveis
-- [x] Dicionário BIP39 protegido
-- [x] Tratamento seguro de erros
-- [x] Sanitização de todos os inputs
-
-## 🔍 Testes de Segurança Recomendados
-
-1. **Teste de XSS**: Tentar injetar `<script>alert('XSS')</script>` em inputs
-2. **Teste de Validação**: Tentar inserir caracteres especiais
-3. **Teste de Prototype Pollution**: Tentar modificar `Object.prototype`
-4. **Teste de DOM Clobbering**: Tentar usar IDs maliciosos
-5. **Teste de Modificação**: Tentar modificar `bip39Words`
-
-## 📚 Referências
-
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
-- [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
-- [XSS Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)
-
-## ⚠️ Notas Importantes
-
-- Esta aplicação foi projetada para funcionar 100% offline
-- Nenhum dado é enviado para servidores
-- O dicionário BIP39 é imutável e protegido
-- Todas as validações são feitas no cliente
-- Use apenas em ambientes seguros e offline quando possível
+**Use offline** num dispositivo de confiança ao trabalhar com informação sensível. Extensões de browser, malware e gravação de ecrã estão **fora do alcance** desta app.
 
 ---
 
-**Última atualização:** Janeiro 2026
+## Proteções implementadas
+
+### 1. XSS (Cross-Site Scripting)
+
+- Entrada Encode: apenas letras `[a-z]`
+- Entrada Decode: dígitos validados por posição
+- DOM atualizado com `textContent` / `createElement` — **sem `innerHTML` com dados do utilizador**
+- Sugestões e quadros 1248 criados de forma segura (`clearElement()`)
+
+### 2. Content Security Policy (CSP)
+
+Meta tag em `index.html`:
+
+```
+default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self';
+img-src 'self'; object-src 'none'; connect-src 'none'; base-uri 'self'; form-action 'none';
+```
+
+- Sem `unsafe-inline` nem `unsafe-eval`
+- Sem ligações de rede da app (`connect-src 'none'`)
+- Sem plugins/embeds (`object-src 'none'`)
+
+**Nota:** `frame-ancestors` só funciona em headers HTTP (GitHub Pages), não em meta tags.
+
+### 3. Subresource Integrity (SRI)
+
+Scripts externos ao inline têm hash `sha384` em `index.html`:
+
+- `bip39-words.js`
+- `i18n.js`
+- `security.js`
+- `app.js`
+
+Se um ficheiro for alterado no servidor sem atualizar o hash, o browser **recusa carregar** o script.
+
+Regenerar hashes após alterar JS:
+
+```bash
+node scripts/generate-sri.js
+```
+
+### 4. DOM Clobbering (parcial)
+
+`security.js` valida IDs em `document.getElementById` — apenas `[a-zA-Z0-9_-]`, máx. 100 caracteres.
+
+### 5. Dicionário BIP39
+
+- `Object.freeze(bip39Words)` após carregamento (proteção superficial contra reassignment)
+- Validação de integridade: array com **exactamente 2048** entradas
+- Amostragem de palavras no arranque
+
+**Não implementado** (removido por quebrar a app): freeze de protótipos nativos, Proxy no array.
+
+### 6. Logging
+
+- `secureConsole` sanitiza logs (`sanitizeForLog`)
+- Sem stack traces expostos ao utilizador
+
+### 7. Headers / meta de segurança
+
+| Meta | Função |
+|------|--------|
+| `X-Content-Type-Options: nosniff` | Anti MIME-sniffing |
+| `Referrer-Policy: no-referrer` | Não envia referrer |
+| `Permissions-Policy` | Desativa câmara, microfone, geolocalização, etc. |
+| `robots: noindex, nofollow` | Discourage indexação (ferramenta de backup) |
+
+### 8. Inputs
+
+| Campo | Proteção |
+|-------|----------|
+| Encode | `autocomplete="off"`, `spellcheck="false"`, regex `[a-z]` |
+| Decode | `autocomplete="off"`, `inputmode="numeric"`, `spellcheck="false"` |
+
+### 9. Armazenamento
+
+- **Não** persiste palavras BIP39, códigos nem seeds
+- `localStorage` apenas para idioma (`pt-BR` ou `en`) — whitelist estrita
+
+### 10. Service Worker (PWA)
+
+- Cache versionado (`stackbit-1248-v3`)
+- Apenas ficheiros same-origin
+- Atualização automática de caches antigos no `activate`
+
+### 11. Ligações externas
+
+Links no tutorial/recovery usam `rel="noopener noreferrer"`. Só abrem se o utilizador clicar.
+
+---
+
+## Limitações conhecidas
+
+| Risco | Mitigação recomendada |
+|-------|------------------------|
+| Dispositivo comprometido | Usar offline, air-gapped se possível |
+| Extensões maliciosas | Browser limpo, sem extensões |
+| Supply chain (GitHub) | SRI + rever commits; clonar e usar localmente |
+| Shoulder surfing / screen capture | Ambiente privado |
+| Cache SW na 1.ª visita online | Instalar PWA offline; verificar origem GitHub |
+| `Object.freeze` superficial | Não substitui ambiente de execução confiável |
+
+---
+
+## Checklist
+
+- [x] CSP restritiva
+- [x] SRI nos scripts
+- [x] Anti-XSS nos inputs e DOM
+- [x] Sem `connect-src` (zero rede em runtime)
+- [x] Sem persistência de seed
+- [x] Autocomplete desativado
+- [x] `noindex` para motores de busca
+- [x] Documentação alinhada com o código
+
+---
+
+## Testes manuais sugeridos
+
+1. Input Encode: `<script>alert(1)</script>` → rejeitado / sanitizado
+2. DevTools → alterar `bip39-words.js` no servidor → SRI bloqueia carregamento
+3. Offline: desligar rede → app continua após cache PWA
+4. Colar `1059` no Decode → preenche 4 campos sem erro
+
+---
+
+**Última atualização:** Junho 2026

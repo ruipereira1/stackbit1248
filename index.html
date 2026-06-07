@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'none'; base-uri 'self'; form-action 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; object-src 'none'; connect-src 'none'; base-uri 'self'; form-action 'none';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="no-referrer">
     <!-- NOTA: X-Frame-Options e frame-ancestors só funcionam em headers HTTP, não em meta tags -->
@@ -14,7 +14,7 @@
         content="Ferramenta para codificação e recuperação de seed phrases BIP39 usando o sistema Stackbit 1248">
     <meta name="keywords" content="Stackbit 1248, BIP39, seed phrase, backup, criptomoedas, carteira, metal wallet, offline, segurança">
     <meta name="author" content="Stackbit 1248 Tool">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://ruipereira1.github.io/stackbit1248/">
     
     <!-- Open Graph / Facebook -->
@@ -126,13 +126,13 @@
                     <label data-i18n="decodeLabel">Código 1248 (0001-2048)</label>
                     <div class="digit-inputs">
                         <input type="text" class="digit-input" id="decode-d1" maxlength="1" pattern="[0-2]"
-                            placeholder="0">
+                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false">
                         <input type="text" class="digit-input" id="decode-d2" maxlength="1" pattern="[0-9]"
-                            placeholder="0">
+                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false">
                         <input type="text" class="digit-input" id="decode-d3" maxlength="1" pattern="[0-9]"
-                            placeholder="0">
+                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false">
                         <input type="text" class="digit-input" id="decode-d4" maxlength="1" pattern="[0-9]"
-                            placeholder="0">
+                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false">
                     </div>
                 </div>
 
@@ -423,10 +423,10 @@
     }
     </script>
 
-    <script src="bip39-words.js"></script>
-    <script src="i18n.js"></script>
-    <script src="security.js"></script>
-    <script src="app.js"></script>
+    <script src="bip39-words.js" integrity="sha384-llySfv74bapownYNyBR6obKHIxdXma1TruSqOfYCqksZrJnrEiac45X6X2jsS95I" crossorigin="anonymous"></script>
+    <script src="i18n.js" integrity="sha384-UJ7nnBh91u4tSVyCvk65X2WozhgWi50MD1mNcJkK1djfGoL4doVzHc3zKDpxKXKz" crossorigin="anonymous"></script>
+    <script src="security.js" integrity="sha384-XXoZLvYUCt+rKQ149q317LNgWKmCooDA4y+Hk1Lul6xN/o4xJ1I1NFkfOekDaRIo" crossorigin="anonymous"></script>
+    <script src="app.js" integrity="sha384-VjlVFkl8eh67C7nwfoUXEEefJPOTFbw1eM86hmQhy0UWFjURy8vOX0VoZspxhCMo" crossorigin="anonymous"></script>
 </body>
 
 </html>

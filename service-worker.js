@@ -3,7 +3,7 @@
  * Permite funcionamento offline completo (PWA)
  */
 
-const CACHE_NAME = 'stackbit-1248-v2';
+const CACHE_NAME = 'stackbit-1248-v3';
 const FILES_TO_CACHE = [
   './',
   './index.html',

@@ -1,8 +1,3 @@
-# robots.txt para Stackbit 1248
-# Permite indexação por motores de busca
-
+# Ferramenta de backup BIP39 — não indexar
 User-agent: *
-Allow: /
-
-# Sitemap (quando disponível)
-# Sitemap: https://ruipereira1.github.io/stackbit1248/sitemap.xml
+Disallow: /

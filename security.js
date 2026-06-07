@@ -40,7 +40,9 @@
             }
             btn.addEventListener('click', function () {
                 const lang = btn.getAttribute('data-lang');
-                setLanguage(lang);
+                if (typeof setLanguage === 'function') {
+                    setLanguage(lang);
+                }
                 langButtons.forEach(function (b) { b.classList.remove('active'); });
                 btn.classList.add('active');
             });

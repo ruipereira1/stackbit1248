@@ -29,16 +29,21 @@ Aplicação web open source para codificação e decodificação de palavras BIP
 
 ## 🔒 Segurança
 
-Aplicação 100% segura:
-- ✅ Sem vulnerabilidades conhecidas
-- ✅ Proteção contra XSS
-- ✅ Validação rigorosa de inputs
-- ✅ Sem armazenamento de dados
-- ✅ 100% offline
+Medidas implementadas (detalhes em [SEGURANCA.md](SEGURANCA.md)):
 
-## ⚠️ Aviso
+- ✅ CSP restritiva (sem `unsafe-inline` / `unsafe-eval`, `connect-src 'none'`)
+- ✅ SRI (Subresource Integrity) em todos os scripts
+- ✅ Proteção XSS — validação de inputs e DOM seguro
+- ✅ Sem armazenamento de seed (apenas preferência de idioma)
+- ✅ Funciona 100% offline após cache PWA
+- ✅ `autocomplete="off"` nos campos Encode e Decode
 
-Use apenas offline. Nunca compartilhe sua seed phrase.
+## ⚠️ Aviso importante
+
+- **Use offline** num dispositivo de confiança
+- **Nunca partilhe** a sua seed phrase
+- **Evite introduzir a seed completa (12/24 palavras) online** — use apenas códigos 1248 ou palavras individuais para verificação
+- Extensões de browser e malware podem ler o ecrã — este risco não é eliminável por código web
 
 ## 📄 Licença
 
