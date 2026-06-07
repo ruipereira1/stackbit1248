@@ -56,7 +56,7 @@ function stylesheetIntegrityPattern(file) {
   return new RegExp(
     '(<link\\s+rel="stylesheet"\\s+href="' +
       escapeRegex(file) +
-      '"\\s+integrity=")sha384-[^"]+("\\s+crossorigin="anonymous"\\s*/>)',
+      '"\\s+integrity=")sha384-[^"]+("\\s+crossorigin="anonymous"\\s*/?>)',
     'i'
   );
 }
