@@ -68,6 +68,8 @@
             return;
         }
 
+        purgeLegacyCaches();
+
         window.addEventListener('load', function () {
             verifyServiceWorkerScript().then(function (valid) {
                 if (!valid) {
@@ -76,11 +78,26 @@
                     }
                     return;
                 }
-                navigator.serviceWorker.register('./service-worker.js').catch(function () {
+                navigator.serviceWorker.register('./service-worker.js').then(function (registration) {
+                    if (registration && typeof registration.update === 'function') {
+                        registration.update();
+                    }
+                }).catch(function () {
                     /* normal em alguns ambientes restritos */
                 });
             });
         });
+    }
+
+    function purgeLegacyCaches() {
+        if (!('caches' in window)) return;
+        caches.keys().then(function (names) {
+            names.forEach(function (name) {
+                if (name.indexOf('stackbit-1248-') === 0 && name !== 'stackbit-1248-v4') {
+                    caches.delete(name);
+                }
+            });
+        }).catch(function () { /* ignorar */ });
     }
 
     registerServiceWorkerIfValid();
