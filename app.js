@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const tabs = document.querySelectorAll('.tab');
-  const sections = document.querySelectorAll('.section');
   const encodeInput = document.getElementById('encode-input');
   const encodeSuggestions = document.getElementById('encode-suggestions');
 
@@ -214,40 +213,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 0);
   }
 
-  tabs.forEach(function (tab) {
-    if (!tab) return;
-    tab.addEventListener('click', function () {
-      try {
-        const previousTab = document.querySelector('.tab.active');
-        const previousId = previousTab ? previousTab.getAttribute('data-tab') : null;
-
-        tabs.forEach(function (t) {
-          if (t) t.classList.remove('active');
-        });
-        tab.classList.add('active');
-
-        const targetId = tab.getAttribute('data-tab');
-        if (!targetId || (targetId !== 'encode' && targetId !== 'decode' && targetId !== 'recovery' && targetId !== 'tutorial' && targetId !== 'about')) {
-          secureConsole.error('Erro: Tab inválido');
-          return;
-        }
-
-        if (previousId === 'encode' && targetId !== 'encode') {
-          clearEncodeState();
-        }
-        if (previousId === 'decode' && targetId !== 'decode') {
-          clearDecodeState();
-        }
-
-        sections.forEach(function (s) {
-          if (!s) return;
-          s.classList.remove('active');
-          if (s.id === targetId) s.classList.add('active');
-        });
-      } catch (error) {
-        secureConsole.error('Erro na navegação');
-      }
-    });
+  document.addEventListener('stackbit:tabchange', function (event) {
+    if (!event || !event.detail) {
+      return;
+    }
+    var previousId = event.detail.previousId;
+    var targetId = event.detail.targetId;
+    if (previousId === 'encode' && targetId !== 'encode') {
+      clearEncodeState();
+    }
+    if (previousId === 'decode' && targetId !== 'decode') {
+      clearDecodeState();
+    }
   });
 
   encodeInput.addEventListener('input', function (e) {

@@ -102,8 +102,60 @@
 
     registerServiceWorkerIfValid();
 
-    // ── 5. Inicializar seletor de idioma ─────────────────────────────────────
+    // ── 5. Navegação por separadores (independente de app.js) ───────────────
+    var VALID_TABS = ['encode', 'decode', 'recovery', 'tutorial', 'about'];
+
+    function switchTab(targetId, previousId) {
+        if (VALID_TABS.indexOf(targetId) === -1) {
+            return false;
+        }
+
+        document.querySelectorAll('.tab').forEach(function (tab) {
+            tab.classList.toggle('active', tab.getAttribute('data-tab') === targetId);
+        });
+
+        document.querySelectorAll('.section').forEach(function (section) {
+            if (!section || !section.id) {
+                return;
+            }
+            section.classList.toggle('active', section.id === targetId);
+        });
+
+        document.dispatchEvent(new CustomEvent('stackbit:tabchange', {
+            detail: { previousId: previousId || null, targetId: targetId }
+        }));
+
+        return true;
+    }
+
+    function initTabNavigation() {
+        var nav = document.querySelector('nav.tabs');
+        if (!nav) {
+            return;
+        }
+
+        nav.addEventListener('click', function (event) {
+            var tab = event.target.closest('.tab');
+            if (!tab || !nav.contains(tab)) {
+                return;
+            }
+
+            var targetId = tab.getAttribute('data-tab');
+            var previousTab = document.querySelector('.tab.active');
+            var previousId = previousTab ? previousTab.getAttribute('data-tab') : null;
+
+            if (targetId === previousId) {
+                return;
+            }
+
+            switchTab(targetId, previousId);
+        });
+    }
+
+    // ── 6. Inicializar seletor de idioma ─────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function () {
+        initTabNavigation();
+
         const langButtons = document.querySelectorAll('.lang-btn');
         const currentLang = getCurrentLanguage();
 
