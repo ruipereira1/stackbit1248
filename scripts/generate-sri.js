@@ -23,20 +23,34 @@ function hashFile(file) {
   return 'sha384-' + crypto.createHash('sha384').update(buf).digest('base64');
 }
 
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function scriptIntegrityPattern(file) {
+  return new RegExp(
+    '(<script\\s+src="' +
+      escapeRegex(file) +
+      '"\\s+integrity=")sha384-[^"]+("\\s+crossorigin="anonymous"\\s*></script>)',
+    'i'
+  );
+}
+
 function updateIndexHtml(hashes) {
   let html = fs.readFileSync(indexPath, 'utf8');
   let changed = 0;
 
   indexScripts.forEach((file) => {
     const hash = hashes[file];
-    const pattern = new RegExp(
-      `(<script src="${file.replace('.', '\\.')}" integrity=")sha384-[^"]+(" crossorigin="anonymous"></script>)`
-    );
-    const replacement = `$1${hash}$2`;
-    const next = html.replace(pattern, replacement);
-    if (next === html) {
-      console.warn(`AVISO: tag <script> de ${file} não encontrada ou formato inesperado em index.html`);
-    } else {
+    const pattern = scriptIntegrityPattern(file);
+    if (!pattern.test(html)) {
+      console.warn('AVISO: tag <script> de ' + file + ' não encontrada em index.html');
+      return;
+    }
+    const next = html.replace(pattern, function (_match, prefix, suffix) {
+      return prefix + hash + suffix;
+    });
+    if (next !== html) {
       changed += 1;
       html = next;
     }
