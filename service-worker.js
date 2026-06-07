@@ -3,7 +3,7 @@
  * Permite funcionamento offline completo (PWA)
  */
 
-const CACHE_NAME = 'stackbit-1248-v5';
+const CACHE_NAME = 'stackbit-1248-v6';
 const FILES_TO_CACHE = [
   './',
   './index.html',
@@ -46,8 +46,51 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+function isCriticalRequest(request) {
+  if (request.mode === 'navigate') {
+    return true;
+  }
+  const path = new URL(request.url).pathname;
+  return /\.(js|html|json)$/i.test(path);
+}
+
+function cacheNetworkResponse(request, networkResponse) {
+  if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+    return;
+  }
+  const responseToCache = networkResponse.clone();
+  caches.open(CACHE_NAME).then((cache) => {
+    cache.put(request, responseToCache);
+  });
+}
+
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') {
+    return;
+  }
+
+  const url = new URL(event.request.url);
+  if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  if (isCriticalRequest(event.request)) {
+    event.respondWith(
+      fetch(event.request).then((networkResponse) => {
+        cacheNetworkResponse(event.request, networkResponse);
+        return networkResponse;
+      }).catch(() => {
+        return caches.match(event.request).then((cached) => {
+          if (cached) {
+            return cached;
+          }
+          if (event.request.mode === 'navigate') {
+            return caches.match('./index.html');
+          }
+          return Response.error();
+        });
+      })
+    );
     return;
   }
 
@@ -58,20 +101,7 @@ self.addEventListener('fetch', (event) => {
       }
 
       return fetch(event.request).then((networkResponse) => {
-        const url = new URL(event.request.url);
-        if (url.origin !== self.location.origin) {
-          return networkResponse;
-        }
-
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-          return networkResponse;
-        }
-
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
-        });
-
+        cacheNetworkResponse(event.request, networkResponse);
         return networkResponse;
       }).catch(() => {
         if (event.request.mode === 'navigate') {
