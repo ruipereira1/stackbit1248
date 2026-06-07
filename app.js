@@ -187,11 +187,32 @@ document.addEventListener('DOMContentLoaded', function () {
     clearDecodeState();
   }
 
-  document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState === 'hidden') {
-      clearSensitiveState();
-    }
-  });
+  function bindTap(el, handler) {
+    if (!el) return;
+    var handled = false;
+    el.addEventListener('touchend', function (e) {
+      handled = true;
+      e.preventDefault();
+      handler(e);
+    }, { passive: false });
+    el.addEventListener('click', function (e) {
+      if (handled) {
+        handled = false;
+        return;
+      }
+      handler(e);
+    });
+  }
+
+  function focusDecodeInput(idx) {
+    if (!decodeInputs[idx]) return;
+    window.setTimeout(function () {
+      decodeInputs[idx].focus();
+      if (decodeInputs[idx].select) {
+        decodeInputs[idx].select();
+      }
+    }, 0);
+  }
 
   tabs.forEach(function (tab) {
     if (!tab) return;
@@ -299,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
           suggestionDiv.appendChild(wordSpan);
           suggestionDiv.appendChild(indexSpan);
 
-          suggestionDiv.addEventListener('click', function () {
+          bindTap(suggestionDiv, function () {
             const word = suggestionDiv.getAttribute('data-word');
             const index = parseInt(suggestionDiv.getAttribute('data-index'), 10);
             if (isValidBIP39Word(word) && isValidIndex(index)) {
@@ -546,9 +567,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const focusIdx = Math.min(Math.max(digits.length - 1, 0), 3);
-    if (decodeInputs[focusIdx]) {
-      decodeInputs[focusIdx].focus();
-    }
+    focusDecodeInput(focusIdx);
     checkDecodeFromInputs();
   }
 
@@ -563,8 +582,8 @@ document.addEventListener('DOMContentLoaded', function () {
     value = sanitizeDecodeDigit(value, idx);
     e.target.value = value;
 
-    if (value.length === 1 && idx < 3 && decodeInputs[idx + 1]) {
-      decodeInputs[idx + 1].focus();
+    if (value.length === 1 && idx < 3) {
+      focusDecodeInput(idx + 1);
     }
 
     checkDecodeFromInputs();
@@ -577,6 +596,13 @@ document.addEventListener('DOMContentLoaded', function () {
       handleDecodeInput(e, idx);
     });
 
+    input.addEventListener('keyup', function (e) {
+      if (e.key === 'Backspace' || e.key === 'Delete') {
+        return;
+      }
+      handleDecodeInput(e, idx);
+    });
+
     input.addEventListener('paste', function (e) {
       e.preventDefault();
       const clipboard = e.clipboardData || window.clipboardData;
@@ -585,8 +611,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     input.addEventListener('keydown', function (e) {
-      if (e.key === 'Backspace' && e.target.value.length === 0 && idx > 0 && decodeInputs[idx - 1]) {
-        decodeInputs[idx - 1].focus();
+      if (e.key === 'Backspace' && e.target.value.length === 0 && idx > 0) {
+        focusDecodeInput(idx - 1);
       }
     });
   });

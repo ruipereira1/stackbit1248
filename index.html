@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; object-src 'none'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'none'; media-src 'none'; base-uri 'self'; form-action 'none';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="no-referrer">
@@ -33,7 +33,8 @@
     <meta name="twitter:description" content="Ferramenta offline para codificação e recuperação de seed phrases BIP39 usando o sistema Stackbit 1248">
     
     
-    <link rel="stylesheet" href="styles.css" integrity="sha384-o0WGwCi+KJQdSfGXdVTb26AltPK+YuTldkYe2xjlVrUoCPsJWgwfMtQWeQKee5ID" crossorigin="anonymous">
+    <script src="base-path.js" integrity="sha384-2He5okfX03o54CTWyJljob2aBgGNs+45fp2X9S0F5g6LkqQ87FLX7Ijncigytv4/" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css" integrity="sha384-Eif2fmuUKHCRDOkAmWZ2m7yt7iReEhdlsm48G0OyVVRXDHgPzHmP9bGSjLj40VfC" crossorigin="anonymous">
     <!-- Manifest será carregado via JavaScript apenas se não estiver em file:// -->
     <meta name="theme-color" content="#ff6b35">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -63,23 +64,23 @@
 
         <!-- Navigation Tabs -->
         <nav class="tabs">
-            <button class="tab active" data-tab="encode">
+            <button type="button" class="tab active" data-tab="encode">
                 <span class="tab-icon">→</span>
                 <span data-i18n="encode">Encode</span>
             </button>
-            <button class="tab" data-tab="decode">
+            <button type="button" class="tab" data-tab="decode">
                 <span class="tab-icon">←</span>
                 <span data-i18n="decode">Decode</span>
             </button>
-            <button class="tab" data-tab="recovery">
+            <button type="button" class="tab" data-tab="recovery">
                 <span class="tab-icon">🔧</span>
                 <span data-i18n="recovery">Recovery</span>
             </button>
-            <button class="tab" data-tab="tutorial">
+            <button type="button" class="tab" data-tab="tutorial">
                 <span class="tab-icon">📖</span>
                 <span data-i18n="tutorial">Tutorial</span>
             </button>
-            <button class="tab" data-tab="about">
+            <button type="button" class="tab" data-tab="about">
                 <span class="tab-icon">ℹ️</span>
                 <span data-i18n="about">Sobre</span>
             </button>
@@ -97,7 +98,7 @@
                 <div class="input-group">
                     <label for="encode-input" data-i18n="encodeLabel">Palavra BIP39</label>
                     <input type="text" id="encode-input" data-i18n="encodePlaceholder" placeholder="Ex: abandon, zoo, lounge..." autocomplete="off"
-                        spellcheck="false" maxlength="8" autocapitalize="off" autocorrect="off">
+                        spellcheck="false" maxlength="8" autocapitalize="none" autocorrect="off" inputmode="text" lang="en" enterkeyhint="done">
                     <div id="encode-suggestions" class="suggestions"></div>
                 </div>
 
@@ -125,14 +126,14 @@
                 <div class="code-input-group">
                     <label data-i18n="decodeLabel">Código 1248 (0001-2048)</label>
                     <div class="digit-inputs">
-                        <input type="text" class="digit-input" id="decode-d1" maxlength="1" pattern="[0-2]"
-                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false">
-                        <input type="text" class="digit-input" id="decode-d2" maxlength="1" pattern="[0-9]"
-                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false">
-                        <input type="text" class="digit-input" id="decode-d3" maxlength="1" pattern="[0-9]"
-                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false">
-                        <input type="text" class="digit-input" id="decode-d4" maxlength="1" pattern="[0-9]"
-                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false">
+                        <input type="tel" class="digit-input" id="decode-d1" maxlength="1" pattern="[0-2]"
+                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false" enterkeyhint="next">
+                        <input type="tel" class="digit-input" id="decode-d2" maxlength="1" pattern="[0-9]"
+                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false" enterkeyhint="next">
+                        <input type="tel" class="digit-input" id="decode-d3" maxlength="1" pattern="[0-9]"
+                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false" enterkeyhint="next">
+                        <input type="tel" class="digit-input" id="decode-d4" maxlength="1" pattern="[0-9]"
+                            placeholder="0" autocomplete="off" inputmode="numeric" spellcheck="false" enterkeyhint="done">
                     </div>
                 </div>
 
@@ -396,8 +397,8 @@
 
     <script src="bip39-words.js" integrity="sha384-llySfv74bapownYNyBR6obKHIxdXma1TruSqOfYCqksZrJnrEiac45X6X2jsS95I" crossorigin="anonymous"></script>
     <script src="i18n.js" integrity="sha384-UJ7nnBh91u4tSVyCvk65X2WozhgWi50MD1mNcJkK1djfGoL4doVzHc3zKDpxKXKz" crossorigin="anonymous"></script>
-    <script src="security.js" integrity="sha384-FYt7KQH9K4iDjdRk2ZMT6jWGhKxpV82PZNdQSbeQVpVLhECHe4sMcvRb420navMy" crossorigin="anonymous"></script>
-    <script src="app.js" integrity="sha384-z3gjteOj8R1MRV+321mFtcL2B4w7o9/mbiTxJvJZaibEKihdwOSaxsTy73jE/QSt" crossorigin="anonymous"></script>
+    <script src="security.js" integrity="sha384-k1+I63vnhGgwouam9vCMXeAgkhYXvNoRCx+DcNc3yBgZoTHEyk0RSAF23E6VHCTr" crossorigin="anonymous"></script>
+    <script src="app.js" integrity="sha384-Xdqq3BRM9k4E6IaqchPuOyrwsySf+XjiCdUjm+QXQQnTFlQ9gWdoB/Ygu7pYC3+A" crossorigin="anonymous"></script>
 </body>
 
 </html>

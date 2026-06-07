@@ -16,6 +16,9 @@ const securityPath = path.join(root, 'security.js');
 /** Scripts with SRI in index.html */
 const indexScripts = ['bip39-words.js', 'i18n.js', 'security.js', 'app.js'];
 
+/** Loaded in head without integrity (must run before other assets) */
+const headBootstrapScript = 'base-path.js';
+
 /** External JSON-LD (CSP without inline) */
 const jsonLdScript = 'structured-data.json';
 
@@ -61,6 +64,13 @@ function stylesheetIntegrityPattern(file) {
   );
 }
 
+function bootstrapScriptPattern(file) {
+  return new RegExp(
+    '(<script\\s+src="' + escapeRegex(file) + '")(></script>)',
+    'i'
+  );
+}
+
 function replaceIntegrity(html, pattern, file, hash, label) {
   if (!pattern.test(html)) {
     console.warn('WARNING: ' + file + ' tag (' + label + ') not found in index.html');
@@ -72,9 +82,25 @@ function replaceIntegrity(html, pattern, file, hash, label) {
   return { html: next, changed: next !== html ? 1 : 0 };
 }
 
+function updateBootstrapScript(html, file, hash) {
+  const barePattern = bootstrapScriptPattern(file);
+  if (barePattern.test(html)) {
+    const next = html.replace(barePattern, function (_match, prefix, suffix) {
+      return prefix + ' integrity="' + hash + '" crossorigin="anonymous"' + suffix;
+    });
+    return { html: next, changed: next !== html ? 1 : 0 };
+  }
+  const sriPattern = scriptIntegrityPattern(file);
+  return replaceIntegrity(html, sriPattern, file, hash, 'bootstrap');
+}
+
 function updateIndexHtml(hashes) {
   let html = fs.readFileSync(indexPath, 'utf8');
   let changed = 0;
+
+  const bootstrapResult = updateBootstrapScript(html, headBootstrapScript, hashes[headBootstrapScript]);
+  html = bootstrapResult.html;
+  changed += bootstrapResult.changed;
 
   indexScripts.forEach(function (file) {
     const result = replaceIntegrity(html, scriptIntegrityPattern(file), file, hashes[file], 'script');
@@ -126,6 +152,7 @@ function updateSecurityJsSwHash(hash) {
 }
 
 const allFiles = [
+  headBootstrapScript,
   ...indexScripts,
   jsonLdScript,
   stylesheet,

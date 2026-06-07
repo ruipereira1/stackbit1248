@@ -7,7 +7,7 @@
     'use strict';
 
     // Hash esperado de service-worker.js (gerado por scripts/generate-sri.js)
-    const EXPECTED_SW_SHA384 = 'sha384-sKgKMtvTcRQKD1SA4ypMvWrTFn2ndzXEeMenkphR0mLqbXyN0fiiWBQMjeh4e/Fe';
+    const EXPECTED_SW_SHA384 = 'sha384-TirBVt3C0ebw8KlldnRIYv0KNpUguGSQF5HqJM4h4XKE5W+9fQwQWjWCorLOc9FC';
 
     // ── 1. DOM Clobbering protection ────────────────────────────────────────
     const _getElementById = document.getElementById.bind(document);
@@ -93,7 +93,7 @@
         if (!('caches' in window)) return;
         caches.keys().then(function (names) {
             names.forEach(function (name) {
-                if (name.indexOf('stackbit-1248-') === 0 && name !== 'stackbit-1248-v4') {
+                if (name.indexOf('stackbit-1248-') === 0 && name !== 'stackbit-1248-v5') {
                     caches.delete(name);
                 }
             });
