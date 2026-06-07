@@ -45,7 +45,7 @@ Scripts externos ao inline têm hash `sha384` em `index.html`:
 
 Se um ficheiro for alterado no servidor sem atualizar o hash, o browser **recusa carregar** o script.
 
-Regenerar hashes após alterar JS:
+Regenerar e **atualizar index.html automaticamente** após alterar JS:
 
 ```bash
 node scripts/generate-sri.js
